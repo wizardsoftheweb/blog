@@ -6,3 +6,8 @@ theme = 'hugo-casper3'
 [params]
 logo = '/images/site-header.png'
 description = 'fount of useless knowledge'
+
+[menu]
+[[menu.main]]
+name = 'Home'
+url = '/'
