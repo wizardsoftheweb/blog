@@ -1,4 +1,8 @@
-baseURL = 'http://example.org/'
+baseURL = 'http://blog.wizardsoftheweb.pro/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'Wizards of the Web'
 theme = 'hugo-casper3'
+
+[params]
+logo = '/images/site-header.png'
+description = 'fount of useless knowledge'
