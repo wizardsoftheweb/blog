@@ -2,8 +2,7 @@
 title: "Keepass Freerdp"
 date: 2023-01-05T19:40:33-06:00
 feature_image: "/images/2017/09/keepass-and-konsole-2.png"
-authors:
-  - CJ Harries
+author: CJ Harries
 draft: true
 ---
 
