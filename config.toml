@@ -3,6 +3,10 @@ languageCode = 'en-us'
 title = 'Wizards of the Web'
 theme = 'hugo-casper3'
 
+[taxonomies]
+tag = 'tags'
+category = 'categories'
+
 [permalinks]
 posts = '/:title'
 

@@ -4,6 +4,13 @@ date: 2023-01-05T19:40:33-06:00
 feature_image: "/images/2017/09/keepass-and-konsole-2.png"
 author: CJ Harries
 description: A great RDP-credential solution is KeePass (I recommend ~2; you'll see that here). Like other repetitive user-based CLI tasks, KeePass kills xfreerdp.
+tags:
+  - KeePass
+  - CLI
+  - Automation
+  - Linux
+  - RDP
+  - FreeRDP
 draft: true
 ---
 
