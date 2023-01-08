@@ -10,6 +10,11 @@
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {{ if .IsHome }}
+    <meta name="description" content="{{ .Site.Params.description }}" />
+    {{ else }}
+    <meta name="description" content="{{ .Params.description }}" />
+    {{ end }}
 
     {{ $styles := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "style.main.scss" . | toCSS | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $styles.Permalink }}" />
@@ -38,3 +43,4 @@
 
 </body>
 </html>
+
