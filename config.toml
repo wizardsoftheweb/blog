@@ -3,6 +3,9 @@ languageCode = 'en-us'
 title = 'Wizards of the Web'
 theme = 'hugo-casper3'
 
+[permalinks]
+posts = '/:title'
+
 [params]
 logo = '/images/site-header.png'
 description = 'fount of useless knowledge'
