@@ -16,6 +16,7 @@
     <meta name="description" content="{{ .Params.description }}" />
     {{ end }}
 
+    <link rel="icon" href="/favicon.png" type="image/png" />
     {{ $styles := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "style.main.scss" . | toCSS | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $styles.Permalink }}" />
 
