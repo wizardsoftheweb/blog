@@ -7,7 +7,7 @@ theme = 'hugo-casper3'
 tag = 'tags'
 
 [permalinks]
-posts = '/:title'
+posts = '/:slug'
 
 [params]
 logo = '/images/site-header.png'
