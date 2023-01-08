@@ -1,4 +1,19 @@
-baseURL = 'http://example.org/'
+baseURL = 'http://blog.wizardsoftheweb.pro/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
-theme = 'ananke'
+title = 'Wizards of the Web'
+theme = 'hugo-casper3'
+
+[taxonomies]
+tag = 'tags'
+
+[permalinks]
+posts = '/:title'
+
+[params]
+logo = '/images/site-header.png'
+description = 'fount of useless knowledge'
+
+[menu]
+[[menu.main]]
+name = 'Home'
+url = '/'
