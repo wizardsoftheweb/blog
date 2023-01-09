@@ -5,7 +5,7 @@ date: "2017-12-22T01:00:00.000Z"
 feature_image: "/images/2017/12/new_albums-1.png"
 author: "CJ Harries"
 description: "I missed writing about music. This is the first year I haven't had slam in my top five since probably 2012."
-tags: 
+tags:
   - music
   - 2017
   - Converge
@@ -35,18 +35,18 @@ I missed writing about music. Clicking on the album covers should take you somew
 
 <!-- MarkdownTOC -->
 
-- [New Albums](#newalbums)
-    - [Converge - *The Dusk In Us*](#converge-theduskinus)
-    - [Zao - *Pyrrhic Victory*](#zao-pyrrhicvictory)
-    - [Comeback Kid - *Outsider*](#comebackkid-outsider)
-    - [Perturbator - *New Model*](#perturbator-newmodel)
-    - [Insane Power - *Silent*](#insanepower-silent)
-- [Old Albums](#oldalbums)
-    - [Run the Jewels - *RTJ 3*](#runthejewels-rtj3)
-    - [XavlegbmaofffassssitimiwoamndutroabcwapwaeiippohfffX - *Gore*](#xavlegbmaofffassssitimiwoamndutroabcwapwaeiippohfffx-gore)
-    - [Evergreen Terrace - *Dead Horses*](#evergreenterrace-deadhorses)
-    - [Desolated - *The End*](#desolated-theend)
-    - [GosT - *Behemoth*](#gost-behemoth)
+- [New Albums](#new-albums)
+  - [Converge - *The Dusk In Us*](#converge---the-dusk-in-us)
+  - [Zao - *Pyrrhic Victory*](#zao---pyrrhic-victory)
+  - [Comeback Kid - *Outsider*](#comeback-kid---outsider)
+  - [Perturbator - *New Model*](#perturbator---new-model)
+  - [Insane Power - *Silent*](#insane-power---silent)
+- [Old Albums](#old-albums)
+  - [Run the Jewels - *RTJ 3*](#run-the-jewels---rtj-3)
+  - [XavlegbmaofffassssitimiwoamndutroabcwapwaeiippohfffX - *Gore*](#xavlegbmaofffassssitimiwoamndutroabcwapwaeiippohfffx---gore)
+  - [Evergreen Terrace - *Dead Horses*](#evergreen-terrace---dead-horses)
+  - [Desolated - *The End*](#desolated---the-end)
+  - [GosT - *Behemoth*](#gost---behemoth)
 
 <!-- /MarkdownTOC -->
 
@@ -58,7 +58,7 @@ This is the first year I haven't had slam in my top five since probably 2012. fe
 
 [![converge-the_dusk_in_us](/images/2017/12/converge-the_dusk_in_us-1.jpg)](https://convergecult.bandcamp.com/album/the-dusk-in-us)
 
-Mathcore pioneers Converge returned after a five year (new) hiatus with what is unsurprisingly my favorite album of the year. The last time I saw these guys I almost broke my thumb in the pit and had a really hard time pulling an all-nighter with peers in Algebraic Combinatorics because of the painkillers. That's relevant, five years later, because I don't do much math anymore but Converge is still killing it. I always hate admitting I like anything Jake Bannon, but, wow, I'm beginning to like his weird not-quite-clean-but-not-dirty-either crooning woven in with tight riffs, mad distortion, and impeccable beats. 
+Mathcore pioneers Converge returned after a five year (new) hiatus with what is unsurprisingly my favorite album of the year. The last time I saw these guys I almost broke my thumb in the pit and had a really hard time pulling an all-nighter with peers in Algebraic Combinatorics because of the painkillers. That's relevant, five years later, because I don't do much math anymore but Converge is still killing it. I always hate admitting I like anything Jake Bannon, but, wow, I'm beginning to like his weird not-quite-clean-but-not-dirty-either crooning woven in with tight riffs, mad distortion, and impeccable beats.
 
 *The Dusk In Us* came out November 3rd on Deathwish.
 
@@ -90,7 +90,7 @@ I was listening to this for about a month at the gym before I realized it was ne
 
 [![insane_power-silent](/images/2017/12/insane_power-silent-1.jpg)](https://insanepower.bandcamp.com/album/silent)
 
-I preordered this and totally forgot about until I started putting together this list. Insane Power is a tidy little power violence outfit from Maryland. I've been in touch with one of their members off and on since my actual music days. I don't have much of a reference point for power violence (I can name Nails and that's about it) but I really dig *Silent*. 
+I preordered this and totally forgot about until I started putting together this list. Insane Power is a tidy little power violence outfit from Maryland. I've been in touch with one of their members off and on since my actual music days. I don't have much of a reference point for power violence (I can name Nails and that's about it) but I really dig *Silent*.
 
 *Silent* came out independently November 28th.
 
@@ -128,3 +128,5 @@ I'm not sure I listened to as much Desolated as I did, say, Wolfpack, this year,
 [![gost-behemoth](/images/2017/12/gost-behemoth-1.jpg)](https://blood-music.bandcamp.com/album/behemoth)
 
 The only EDM to make the old list, *Behemoth* is an amazing example of what synth-/dark-/creep-/whatever-tag-reddit-finally-settled-on-wave is capable of. Its simple construction belies the underlying complexity. I enjoy how GosT begins with a couple of small things, like a snare hit and a synth note, builds a dense rhythm, and slowly takes it apart again. *Behemoth* is also a bit more energetic than some of its peers, making for a great dance album.
+
+[def]: #newalbums
