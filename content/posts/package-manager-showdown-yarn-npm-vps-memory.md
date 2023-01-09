@@ -4,7 +4,7 @@ slug: "package-manager-showdown-yarn-npm-vps-memory"
 date: "2017-12-13T03:00:00.000Z"
 feature_image: "/images/2017/12/tmux-comp-resized.png"
 author: "CJ Harries"
-tags: 
+tags:
   - NPM
   - Yarn
   - JavaScript
@@ -21,17 +21,17 @@ I've worked pretty hard to stay out the whole JS package manager debate. NPM's a
 
 - [Note](#note)
 - [Background](#background)
-    - [Digital Ocean](#digitalocean)
-    - [Ghost](#ghost)
+  - [Digital Ocean](#digital-ocean)
+  - [Ghost](#ghost)
 - [Origin](#origin)
 - [NPM](#npm)
-    - [CLI](#cli)
-    - [Analysis](#analysis)
-    - [Memory Usage](#memoryusage)
+  - [CLI](#cli)
+  - [Analysis](#analysis)
+  - [Memory Usage](#memory-usage)
 - [Yarn](#yarn)
-    - [CLI](#cli-1)
-    - [Analysis](#analysis-1)
-    - [Memory Usage](#memoryusage-1)
+  - [CLI](#cli-1)
+  - [Analysis](#analysis-1)
+  - [Memory Usage](#memory-usage-1)
 - [Side-By-Side](#side-by-side)
 - [Verdict](#verdict)
 
@@ -54,10 +54,12 @@ The one thing that I actually require from my package managers is that they have
 I use [Ghost](https://ghost.org/) as a blogging platform. It runs rather well on basic droplets. It's a well-constructed JS app, so it's not massively bloated. At the same time, I'm not running an enterprise server and my traffic is so small Ghost doesn't ever get a chance to run out of memory. MySQL is typically using at least twice as many resources as Ghost, which is probably a good thing because it's only running for Ghost.
 
 Today, after applying [a really important Node security patch](https://nodejs.org/en/blog/vulnerability/december-2017-security-releases/), I decided to finally update Ghost. [Ghost-CLI](https://github.com/TryGhost/Ghost-CLI) is a great little tool that basic does everything for me. Sort of. Like normal, I ran
+
 ```bash
-$ ghost update
+ghost update
 ```
-but the script failed. I didn't initially notice what had happened, so, after trying all sorts of things that didn't work, I reverted the updates and cracked open the directory in question. 
+
+but the script failed. I didn't initially notice what had happened, so, after trying all sorts of things that didn't work, I reverted the updates and cracked open the directory in question.
 
 ## Origin
 
@@ -158,7 +160,7 @@ Done in 38.62s.
 
 ### Analysis
 
-It worked. I'm not sure it needs more analysis than that. 
+It worked. I'm not sure it needs more analysis than that.
 
 ### Memory Usage
 
