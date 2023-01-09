@@ -19,28 +19,36 @@ One of my primary work responsibilities is to handle the Linux environments not 
 The rest of our network, like most of the offices I've ever worked in, runs on Windows. Until Microsoft releases Office for Linux, that means I'm stuck RDPing into terminal servers for things like Excel and Word. I've spent a serious chunk of time researching RDP clients. One of these days, I'd like to use [Remmina](https://www.remmina.org/wp/), but their support for not-Ubuntu is pretty lacking. Instead, I settled on [FreeRDP](https://github.com/FreeRDP/FreeRDP), the tool behind Remmina. Unlike Remmina, it actually works on CentOS (and all of the other flavors of Linux I've tried it on so far).
 
 I use `xfreerdp`, [the CLI for FreeRDP](https://github.com/FreeRDP/FreeRDP/wiki/CommandLineInterface). There are two exposed APIs at the moment, one of which is deprecated and will be removed at some point. Of course, using an older, more stable version of Linux means that I'm stuck on the old API (I could rebuild from source or I could keep using the thing that works). A typical session looks like this for me:
+
 ```bash
 xfreerdp --plugin cliprdr -g 1920x1020 -u me -d workdomain 1.2.3.4
 Password:
 ```
+
 Converted to the new API, that should look like this (`g(eometry)` changed to `g(ateway)` so I use `size` instead):
+
 ```bash
 xfreerdp +clipboard /size 1920x1020 /u me /d workdomain 1.2.3.4
 Password:
 ```
+
 For this article, I'll be using the older API because I'm too lazy to rebuild from source and I don't want to write about something without testing it.
 
 On a given day, I'm in our financial VM, our SQL VM, an Office VM to work on TPS reports, our Windows testing VM, and maybe one or two others for various reasons. That's a lot of typing, especially since my work straddles two domains. I could alias all the commands using the password option, e.g.
+
 ```bash
 xfreerdp --plugin cliprdr -g 1920x1020 -u me -d workdomain -p hunter2 1.2.3.4
 ```
+
 I'm not a fan of that option because it exposes my password in my `history`. I could store my credentials in a file, e.g.
+
 ```bash
 cat ~/secret
 # username=me
 # password=hunter2
 xfreerdp --somehow-use-credentials
 ```
+
 I'm not actually sure how that works, and I couldn't find it in the docs. Point is it's not a great idea and storing your credentials in plaintext (either accidentally in your `history` or on purpose in a `(chmod 400)` `secret` file) is an even worse idea. Anyone with `su` access to you (you or `root`) can see it, and if you don't know what you're doing, you might expose it to more than those two groups.
 
 My `xfreerdp` credential solution is to use [KeePass](http://keepass.info/) (I recommend `~2`; that's what you'll see below.). Like other repetitive user-based CLI tasks, KeePass kills `xfreerdp`. You can see a finished copy of the database I'm about to build [in this repo](https://github.com/thecjharries/keepass-freerdp/blob/master/keepass-freerdp.kdbx). The master key is `hunter2`. First some setup:
@@ -65,7 +73,7 @@ Duplicating with references means all entries made from this template reference 
 
 ![keepass-group-auto-type](/images/2017/09/keepass-group-auto-type.png)
 
-```
+```text
 xfreerdp {S:RDP Plugins} -g {S:RDP Geometry} -d {S:Windows Domain} -u {USERNAME} {URL}{ENTER}{DELAY 1000}{PASSWORD}{ENTER}
 ```
 

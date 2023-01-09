@@ -109,7 +109,6 @@ The only reason this isn't in the new list is because they released it early, ri
 
 *Gore* is a short little slam package with great riffs, amazing callouts, and some almost-jazzy parts thrown in for good measure. It's got a nice mix of high and low growls, which I've been in low with since hearing Knights of the Abyss way back before I knew the preferred way to differentiate vocal styles. Don't let my slam label put you off this EP; it's got pleasant djent undertones and way more clean vocals per track than you usually get per slam career. Also "Dicks out for Harambe" is internet gold/10.
 
-
 ### Evergreen Terrace - *Dead Horses*
 
 [![evergreen_terrace-dead_horses](/images/2017/12/evergreen_terrace-dead_horses-1.jpg)](https://en.wikipedia.org/wiki/Dead_Horses)
@@ -127,5 +126,3 @@ I'm not sure I listened to as much Desolated as I did, say, Wolfpack, this year,
 [![gost-behemoth](/images/2017/12/gost-behemoth-1.jpg)](https://blood-music.bandcamp.com/album/behemoth)
 
 The only EDM to make the old list, *Behemoth* is an amazing example of what synth-/dark-/creep-/whatever-tag-reddit-finally-settled-on-wave is capable of. Its simple construction belies the underlying complexity. I enjoy how GosT begins with a couple of small things, like a snare hit and a synth note, builds a dense rhythm, and slowly takes it apart again. *Behemoth* is also a bit more energetic than some of its peers, making for a great dance album.
-
-[def]: #newalbums

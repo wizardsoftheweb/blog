@@ -17,3 +17,6 @@ description = 'fount of useless knowledge'
 [[menu.main]]
 name = 'Home'
 url = '/'
+
+[markup.goldmark.renderer]
+unsafe = true
