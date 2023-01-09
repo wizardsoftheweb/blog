@@ -27,6 +27,8 @@ Hopefully this is useful to someone else. I got confused by the language change 
   - [Hook Definitions](#hook-definitions)
   - [Execution](#execution)
 - [Current API](#current-api)
+  - [CLI](#cli-1)
+  - [External Hooks](#external-hooks)
   - [Hook Definitions](#hook-definitions-1)
   - [Execution](#execution-1)
 - [So What?](#so-what)
@@ -119,7 +121,7 @@ When a cert is installed for any reason (`renew|certonly|run`),
 
 This section uses [tag `v0.19.0`](https://github.com/certbot/certbot/tree/v0.19.0/), which was current when I wrote this.
 
-<h3 id="cli1">CLI</h3>
+### CLI
 
 There weren't many changes from `0.17` in the CLI setup.
 
@@ -127,7 +129,7 @@ There weren't many changes from `0.17` in the CLI setup.
 - `--deploy-hook` [masks `--renew-hook`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1150)
 - Either [all the `deploy_hook`s are duplicated as `renew_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1461) or [there are only `renew_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1472)
 
-<h3 id="externalhooks1">External Hooks</h3>
+### External Hooks
 
 `certbot` can pick up hooks from [its configuration file](https://github.com/certbot/certbot/blob/v0.19.0/docs/using.rst#modifying-the-renewal-configuration-file). I can't find actual documentation of this feature (e.g. [ctrl+f `renew_hook`](https://certbot.eff.org/docs/using.html)), but it's [built by `renewal`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/renewal.py#L30). Specifically, you can create something like this:
 
