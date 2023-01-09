@@ -1,0 +1,22 @@
+---
+title: "{{ title }}"
+slug: "{{ slug }}"
+{%- if published %}
+date: "{{ published }}"
+{%- endif %}
+{%- if "None" != image %}
+feature_image: "{{ image }}"
+{%- endif %}
+author: "CJ Harries"
+{%- if "" != meta_description %}
+description: "{{ meta_description }}"
+{%- endif %}
+{%- if tags %}
+tags: {% for tag in tags %}
+  - {{ tag }}
+{%- endfor %}
+{%- endif %}
+draft: true
+---
+
+{{ markdown }}
