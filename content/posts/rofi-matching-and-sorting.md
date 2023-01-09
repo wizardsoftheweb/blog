@@ -5,7 +5,7 @@ date: "2018-01-29T00:00:00.000Z"
 feature_image: "/images/2018/01/matching-and-sorting-header-1.png"
 author: "CJ Harries"
 description: "rofi is a neat tool that does so many  things. This post looks at configuring rofi's matching/sorting and continues investigating dmenu and script modi applications."
-tags: 
+tags:
   - rofi
   - Linux
   - X11
@@ -16,6 +16,7 @@ tags:
   - Python
 draft: true
 ---
+<!-- markdownlint-disable MD011 MD037 -->
 
 This is the fifth in a series of several posts on how to do way more than you really need to with `rofi`. It's a neat little tool that does so many cool things. I don't have a set number of posts, and I don't have a set goal. I just want to share something I find useful.
 
@@ -27,10 +28,10 @@ This post looks at configuring `rofi`'s matching and sorting.
 - [Code](#code)
 - [Overview](#overview)
   - [Comparison](#comparison)
-- [Basic Sort Config](#basicsortconfig)
-- [(Yet Another) `rofi` Options Script](#yetanotherrofioptionsscript)
-  - [Full Script](#fullscript)
-- [Change Matching and Sorting Via a `modi`](#changematchingandsortingviaamodi)
+- [Basic Sort Config](#basic-sort-config)
+- [(Yet Another) `rofi` Options Script](#yet-another-rofi-options-script)
+  - [Full Script](#full-script)
+- [Change Matching and Sorting Via a `modi`](#change-matching-and-sorting-via-a-modi)
 
 ## Assumptions
 

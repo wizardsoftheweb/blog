@@ -5,7 +5,7 @@ date: "2018-01-29T02:00:00.000Z"
 feature_image: "/images/2018/01/useful-options-i-header.png"
 author: "CJ Harries"
 description: "rofi is a neat little tool that does so many cool things. This post highlights several useful rofi options. I don't try to script anything here, so it's a fairly short read."
-tags: 
+tags:
   - rofi
   - Linux
   - X11
@@ -15,6 +15,7 @@ tags:
   - sed
 draft: true
 ---
+<!-- markdownlint-disable MD037 -->
 
 This is the sixth in a series of several posts on how to do way more than you really need to with `rofi`. It's a neat little tool that does so many cool things. I don't have a set number of posts, and I don't have a set goal. I just want to share something I find useful.
 
@@ -25,8 +26,8 @@ This post highlights several useful `rofi` options. I don't try to script anythi
 - [Assumptions](#assumptions)
 - [Code](#code)
 - [`combi`](#combi)
-- [Cycling `modi`](#cyclingmodi)
-- [`sidebar-mode`](#sidebarmode)
+- [Cycling `modi`](#cycling-modi)
+- [`sidebar-mode`](#sidebar-mode)
 
 ## Assumptions
 

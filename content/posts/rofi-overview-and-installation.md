@@ -5,7 +5,7 @@ date: "2018-01-27T22:00:00.000Z"
 feature_image: "/images/2018/01/install-header.png"
 author: "CJ Harries"
 description: "rofi is a neat little tool that does so many cool things. This post provides a rofi overview and installation instructions."
-tags: 
+tags:
   - rofi
   - Linux
   - X11
@@ -26,12 +26,12 @@ This post provides a `rofi` overview and installation instructions.
 - [Overview](#overview)
 - [Installation](#installation)
   - [Dependencies](#dependencies)
-  - [Source Code](#sourcecode)
+  - [Source Code](#source-code)
   - [Options](#options)
   - [Standard](#standard)
   - [Debuggable](#debuggable)
-- [Easy Mode](#easymode)
-  - [Full Script](#fullscript)
+- [Easy Mode](#easy-mode)
+  - [Full Script](#full-script)
 
 ## Assumptions
 
@@ -47,12 +47,12 @@ You can view the code related to this post [under the `post-01-overview-and-inst
 
 Rather than make my own shoddy feature list, I'm just going to link [the official docs](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md), whose screenshots are already very pretty. `rofi` can, among other things, do this stuff:
 
-* [switch windows](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#window-switcher),
-* [launch applications](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#application-launcher),
-* [launch `.desktop` applications](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#desktop-file-application-launcher),
-* [run `ssh` via `~/.ssh/config`](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#ssh-launcher),
-* [run scripts](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#script-mode), and
-* [replace `dmenu`](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#dmenu-replacement) (with more features!).
+- [switch windows](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#window-switcher),
+- [launch applications](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#application-launcher),
+- [launch `.desktop` applications](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#desktop-file-application-launcher),
+- [run `ssh` via `~/.ssh/config`](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#ssh-launcher),
+- [run scripts](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#script-mode), and
+- [replace `dmenu`](https://github.com/DaveDavenport/rofi/blob/1.4.2/README.md#dmenu-replacement) (with more features!).
 
 It also does a few more things that I'll probably explore later.
 
@@ -101,6 +101,7 @@ There are no more brace expansions.
 </td></tr></table>
 
 ### Source Code
+
 We'll need to get a current copy of the source.
 
 <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
@@ -171,7 +172,7 @@ I'd be lying if I said I fully understand the debug build. I had to first `make`
 
 ## Easy Mode
 
-I've collected everything in [a simple installation script](#fullscript). Pull requests are absolutely welcome.
+I've collected everything in [a simple installation script](#full-script). Pull requests are absolutely welcome.
 
 <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
 <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> curl -fLo ./install-from-source https://raw.githubusercontent.com/thecjharries/posts-tooling-rofi/feature/post-01-overview-and-installation/scripts/install-from-source<br><span class="gp" style="color:#66d9ef">$</span> chmod +x ./install-from-source<br></pre></div>

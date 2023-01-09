@@ -5,7 +5,7 @@ date: "2018-01-28T18:00:00.000Z"
 feature_image: "/images/2018/01/scripting-modi-discovery-header.png"
 author: "CJ Harries"
 description: "rofi is a neat little tool that does so many cool things. This post looks at automatically updating modi lists. It also covers some intro awk stuff."
-tags: 
+tags:
   - rofi
   - Linux
   - X11
@@ -15,6 +15,7 @@ tags:
   - awk
 draft: true
 ---
+<!-- markdownlint-disable MD010 MD037 -->
 
 This is the third in a series of several posts on how to do way more than you really need to with `rofi`. It's a neat little tool that does so many cool things. I don't have a set number of posts, and I don't have a set goal. I just want to share something I find useful.
 
@@ -24,13 +25,13 @@ This post looks at automatically updating `modi` lists. It also covers some intr
 
 - [Assumptions](#assumptions)
 - [Code](#code)
-- [Script `modi` Discovery](#scriptmodidiscovery)
-- [Available `modi`](#availablemodi)
-- [Updating the Config File](#updatingtheconfigfile)
-  - [`-show`-able `modi`](#showablemodi)
-  - [`combi` `modi`](#combimodi)
-- [All the `modi`](#allthemodi)
-  - [Shell Script](#shellscript)
+- [Script `modi` Discovery](#script-modi-discovery)
+- [Available `modi`](#available-modi)
+- [Updating the Config File](#updating-the-config-file)
+  - [`-show`-able `modi`](#-show-able-modi)
+  - [`combi` `modi`](#combi-modi)
+- [All the `modi`](#all-the-modi)
+  - [Shell Script](#shell-script)
   - [`glob`](#glob)
 
 ## Assumptions
@@ -269,7 +270,7 @@ Provided `awk` is `>=4.1`, we can [edit streams `inplace`](https://www.gnu.org/s
 
 ### `combi` `modi`
 
-This process is almost identical to [`-show`-able `modi`](#showablemodi), so I'll skip the `awk` breakdown. The `combi` `modi` combines multiple `modi` into a single instance. This allows us to group multiple modes together by default.
+This process is almost identical to [`-show`-able `modi`](#-show-able-modi), so I'll skip the `awk` breakdown. The `combi` `modi` combines multiple `modi` into a single instance. This allows us to group multiple modes together by default.
 
 The simplest solution would be to repeat exactly what we did above.
 

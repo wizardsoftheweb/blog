@@ -5,7 +5,7 @@ date: "2018-01-28T14:00:00.000Z"
 feature_image: "/images/2018/01/config-header.png"
 author: "CJ Harries"
 description: "rofi is a neat little tool that does so many cool things. This post looks at basic rofi configuration."
-tags: 
+tags:
   - rofi
   - Linux
   - X11
@@ -25,8 +25,8 @@ This post looks at basic `rofi` configuration.
 
 - [Assumptions](#assumptions)
 - [Code](#code)
-- [Config File](#configfile)
-- [Theme File](#themefile)
+- [Config File](#config-file)
+- [Theme File](#theme-file)
 - [Scripted](#scripted)
 
 ## Assumptions

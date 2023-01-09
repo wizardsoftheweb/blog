@@ -5,7 +5,7 @@ date: "2018-01-28T20:00:00.000Z"
 feature_image: "/images/2018/01/change-window-location-header.png"
 author: "CJ Harries"
 description: "rofi is a neat tool that does so many things. This post looks at changing rofi's window location, introduces rofi's dmenu capabilities, and investigates script modi."
-tags: 
+tags:
   - rofi
   - Linux
   - X11
@@ -16,6 +16,7 @@ tags:
   - awk
 draft: true
 ---
+<!-- markdownlint-disable MD037 -->
 
 This is the fourth in a series of several posts on how to do way more than you really need to with `rofi`. It's a neat little tool that does so many cool things. I don't have a set number of posts, and I don't have a set goal. I just want to share something I find useful.
 
@@ -25,16 +26,16 @@ This post looks at changing `rofi`'s window location. It also introduces some `r
 
 - [Assumptions](#assumptions)
 - [Code](#code)
-- [Window Location](#windowlocation)
+- [Window Location](#window-location)
 - [Scripted](#scripted)
-  - [Basic CLI Location Changer](#basicclilocationchanger)
-  - [CLI Location Changer with GUI](#clilocationchangerwithgui)
-  - [Full Location Changer](#fulllocationchanger)
-- [Location Changer `modi`](#locationchangermodi)
-  - [Create a `script` `modi`](#createascriptmodi)
-  - [Process-Spawning `modi`](#processspawningmodi)
-  - [Consuming `script` `modi`](#consumingscriptmodi)
-  - [Full `window-location` `modi`](#fullwindowlocationmodi)
+  - [Basic CLI Location Changer](#basic-cli-location-changer)
+  - [CLI Location Changer with GUI](#cli-location-changer-with-gui)
+  - [Full Location Changer](#full-location-changer)
+- [Location Changer `modi`](#location-changer-modi)
+  - [Create a `script` `modi`](#create-a-script-modi)
+  - [Process-Spawning `modi`](#process-spawning-modi)
+  - [Consuming `script` `modi`](#consuming-script-modi)
+  - [Full `window-location` `modi`](#full-window-location-modi)
 
 ## Assumptions
 
