@@ -5,7 +5,7 @@ date: "2017-12-25T06:29:47.000Z"
 feature_image: "/images/2017/12/allow-connection-1.jpg"
 author: "CJ Harries"
 description: "I've had trouble with this before so I'm documenting the process. The official Google docs leave out a couple of setup steps, which is very frustrating."
-tags: 
+tags:
   - Google Chrome
   - Android
   - debugging
@@ -20,12 +20,12 @@ I've had trouble with this before, apparently, so this time I'm documenting the 
 <p class="nav-p"><a id="post-nav"></a></p>
 
 - [Drivers](#drivers)
-- [Install the Android Debug Bridge](#installtheandroiddebugbridge)
-    - [Fast Installation](#fastinstallation)
-    - [Manual Installation](#manualinstallation)
-- [Enable USB Debugging](#enableusbdebugging)
-- [Launch `adb`](#launchadb)
-- [Access in DevTools](#accessindevtools)
+- [Install the Android Debug Bridge](#install-the-android-debug-bridge)
+  - [Fast Installation](#fast-installation)
+  - [Manual Installation](#manual-installation)
+- [Enable USB Debugging](#enable-usb-debugging)
+- [Launch `adb`](#launch-adb)
+- [Access in DevTools](#access-in-devtools)
 - [Sources](#sources)
 - [Environment](#environment)
 
@@ -74,9 +74,11 @@ Somewhere in `Developer options` should be a toggle switch to enable USB debuggi
 
 With USB debugging turned on and the phone connected to your computer, launch `adb`.
 
+<!-- markdownlint-disable MD037 -->
 <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
 <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">PS></span> adb devices<br><span class="go" style="color:#888">List of devices attached</span><br><span class="go" style="color:#888">* daemon not running. starting it now at tcp:5037 *</span><br><span class="go" style="color:#888">* daemon started successfully *</span><br><span class="go" style="color:#888">somehash    unauthorized</span><br></pre></div>
 </td></tr></table>
+<!-- markdownlint-enable MD037 -->
 
 On your phone, allow the connection (if the fingerprint checks out).
 
