@@ -5,7 +5,7 @@ date: "2017-10-09T04:33:55.000Z"
 feature_image: "/images/2017/10/npm-cycle-1.png"
 author: "CJ Harries"
 description: "NPM's lifecycle stages provide a discrete set of events to track state. Getting programmatic access to them all was a fun challenge."
-tags: 
+tags:
   - NPM
   - awk
   - Node
@@ -22,21 +22,21 @@ This weekend I sat down to break off a chunk of that. I've been using way too mu
 <p class="nav-p"><a id="post-nav"></a></p>
 <!-- MarkdownTOC -->
 
-- [Quick Note](#quicknote)
-- [NPM Scripts](#npmscripts)
+- [Quick Note](#quick-note)
+- [NPM Scripts](#npm-scripts)
 - [Code](#code)
-- [Distinguished Stages](#distinguishedstages)
-- [Programmatic Access](#programmaticaccess)
-    - [TypeScript](#typescript)
-    - [NPM](#npm)
-        - [`npm-lifecycle`](#npm-lifecycle)
-        - [`npm_lifecycle_event`](#npmlifecycleevent)
-        - [`run-script`](#run-script)
-        - [`npm-lifecycle` Usage](#npm-lifecycleusage)
-    - [Stream Editors to the Rescue](#streameditorstotherescue)
-- [Solutions Compiled](#solutionscompiled)
-    - [Examples](#examples)
-- [Final Thoughts](#finalthoughts)
+- [Distinguished Stages](#distinguished-stages)
+- [Programmatic Access](#programmatic-access)
+  - [TypeScript](#typescript)
+  - [NPM](#npm)
+    - [`npm-lifecycle`](#npm-lifecycle)
+    - [`npm_lifecycle_event`](#npm_lifecycle_event)
+    - [`run-script`](#run-script)
+    - [`npm-lifecycle` Usage](#npm-lifecycle-usage)
+  - [Stream Editors to the Rescue](#stream-editors-to-the-rescue)
+- [Solutions Compiled](#solutions-compiled)
+  - [Examples](#examples)
+- [Final Thoughts](#final-thoughts)
 
 <!-- /MarkdownTOC -->
 
@@ -47,6 +47,7 @@ I haven't taken the time to set up a solid AMP template yet, so if you're viewin
 I assume a lot of things about your shell, mainly that it's not PowerShell or `cmd.exe`. There's a chance I've used some `zsh`isms; if the code isn't working in your shell let me know and I'll find a fix. I think all of the tools I use here are installed by default, or at least easily accessible via your package manager.
 
 For posterity, here's a list of possibly important versions:
+
 ```bash
 $ lsb_release -a
 No LSB modules are available.
@@ -67,22 +68,27 @@ v8.4.0
 $ npm -v
 5.4.2
 ```
+
 All of this was done on some Windows 10 Insider build at least capable of [running edge Docker for Windows](https://blog.wizardsoftheweb.pro/docker-in-wsl/#bespokerequirements).
 
 ## NPM Scripts
 
 NPM has created a solid set of discrete stages that describe every state a package might be in. Each stage typically has three components: `prestage`, `stage`, and `poststage`. The components are made up of shell commands passed to `sh` (or whatever the value of [`script-shell` option](https://docs.npmjs.com/misc/config#script-shell) is). Stages are initiated by running
+
 ```bash
 $ npm run stage
 # e.g.
 $ npm run lint
 ```
+
 or, if the stage is a valid lifecycle stage with a command,
+
 ```bash
 $ npm stage
 # e.g.
 $ npm install
 ```
+
 The `run` command attempts to fire `prestage`. If successful, or if `prestage` doesn't have a command, it continues to `stage`. Again, if successful, or if `stage` is empty, it continues to `poststage`. Finally, if `poststage` is successful, or if it's empty, `npm` exits with code `0`. `npm` will halt and throw failures if any of the stages exit with nonzero status.
 
 ## Code
@@ -90,14 +96,15 @@ The `run` command attempts to fire `prestage`. If successful, or if `prestage` d
 Before we get too far, it might be a good idea to check out an actual package. I'll be poking around [`npm` (latest)](https://github.com/npm/npm) later, so it's a great place to start.
 
 ```bash
-$ git clone https://github.com/npm/npm.git
-$ cd npm
-$ npm install
+git clone https://github.com/npm/npm.git
+cd npm
+npm install
 ```
 
 ## Distinguished Stages
 
 NPM differentiates between lifecycle scripts and user-created scripts. You can see the difference with `npm run`:
+
 ```bash
 $ basename $PWD
 npm
@@ -124,9 +131,11 @@ available via `npm run-script`:
   test-node
     tap --timeout 240 "test/tap/*.js" "test/network/*.js" "test/broken-under-nyc*/*.js"
 ```
+
 Finding a list of lifecycle scripts online is [pretty easy](https://docs.npmjs.com/misc/scripts#description). For the most part, you can assume that an NPM command that alters your package will trigger a lifecycle event.
 
 The [`version` command](https://docs.npmjs.com/cli/version#description) is a great example with some really useful scripts.
+
 ```json
 "scripts": {
   "preversion": "npm test",
@@ -134,37 +143,46 @@ The [`version` command](https://docs.npmjs.com/cli/version#description) is a gre
   "postversion": "git push && git push --tags && rm -rf build/temp"
 }
 ```
+
 Let's break down what happens (I'm just going to focus on the `version` stages and ignore the other lifecycles present):
+
 ```bash
-$ npm version patch
+npm version patch
 ```
+
 1. NPM looks for `preversion`
     1. NPM finds `preversion` (instead of skipping the stage)
     2. NPM executes the command
+
         ```bash
-        $ npm test
+        npm test
         ```
+
     3. NPM checks the exit status of `npm test`
-        * `0` means everything is okay; continue
-        * not zero means something went wrong; throw an error and kill the process
+        - `0` means everything is okay; continue
+        - not zero means something went wrong; throw an error and kill the process
 2. NPM looks for `version`
     1. NPM finds `version` (instead of skipping the stage)
     2. NPM executes the command
+
         ```bash
-        $ npm run build && git add -A dist
+        npm run build && git add -A dist
         ```
+
     3. NPM checks the exit status of `npm run build && git add -A dist`&mdash;note that, with the guard, each individual command must exit with `0`
-        * `0` means everything is okay; continue
-        * not zero means something went wrong; throw an error and kill the process
+        - `0` means everything is okay; continue
+        - not zero means something went wrong; throw an error and kill the process
 3. NPM looks for `postversion`
     1. NPM finds `postversion` (instead of skipping the stage)
     2. NPM executes the command
+
         ```bash
-        $ git push && git push --tags && rm -rf build/temp
+        git push && git push --tags && rm -rf build/temp
         ```
+
     3. NPM checks the exit status of `git push && git push --tags && rm -rf build/temp`&mdash;more guards means more potential points of failure (which isn't a bad thing)
-        * `0` means everything is okay; continue
-        * not zero means something went wrong; throw an error and kill the process
+        - `0` means everything is okay; continue
+        - not zero means something went wrong; throw an error and kill the process
 
 Putting it all together, NPM won't increase the version unless
     1. the tests pass,
@@ -179,17 +197,22 @@ The first step in managing lifecycle scripts is validating the stage. [The docs]
 ### TypeScript
 
 I mostly use TypeScript, so I started [with `npm`'s `package.json`](https://github.com/npm/npm/blob/latest/package.json). The TS handbook says to [bundle whenever possible](http://www.typescriptlang.org/docs/handbook/declaration-files/publishing.html), which makes a ton of sense:
+
 ```bash
 $ grep -P "typ(e|ing)s" package.json || echo "not found"
 not found
 ```
+
 Not a big deal. [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) (`@types`) usually has semi-recent pulls.
+
 ```bash
 $ npm install --save-dev @types/npm
 + @types/npm@2.0.29
 added 2 packages in 3.457s
 ```
+
 I've often found that the `@types` package semver varies wildly from its upstream, so `npm@2` might not be too worrisome.
+
 ```bash
 $ cat node_modules/@types/npm/index.d.ts
 // Type definitions for npm 2.0.0
@@ -198,15 +221,16 @@ $ cat node_modules/@types/npm/index.d.ts
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 ...
 ```
+
 As it turns out, [most of the file](https://github.com/DefinitelyTyped/DefinitelyTyped/blame/master/types/npm/index.d.ts) is from several years ago. The semver actually matches. Unfortunately, that means TypeScript is a bust.
+
 ```bash
-$ git reset --hard
+git reset --hard
 ```
 
 ### NPM
 
 NPM might not be exporting a interface or enum, but there has to be a central repository of events, right? How else would the docs get made?
-
 
 #### `npm-lifecycle`
 
@@ -225,14 +249,17 @@ node_modules/npm-lifecycle/package.json:    "postrelease": "npm publish && git p
 $ grep -R "shrink" node_modules/npm-lifecycle || echo "not found"
 not found
 ```
+
 Honestly, that's confusing. I can understand a generic `lifecycle` package not validating events against a master list, but this is the official `npm` package.
+
 ```bash
-$ git reset --hard
+git reset --hard
 ```
 
 #### `npm_lifecycle_event`
 
 The docs mention [the current stage is stored in `env.npm_lifecycle_event`](https://docs.npmjs.com/misc/scripts#current-lifecycle-event), which seems like a decent term to search next:
+
 ```bash
 $ grep -R "npm_lifecycle_event"
 doc/misc/npm-scripts.md:Lastly, the `npm_lifecycle_event` environment variable is set to
@@ -245,11 +272,13 @@ node_modules/npm-lifecycle/index.js:      env.npm_lifecycle_event = stage
 node_modules/npm-lifecycle/index.js:  var stage = env.npm_lifecycle_event
 node_modules/npm-lifecycle/index.js:  var stage = env.npm_lifecycle_event
 ```
+
 Unfortunately, that leads us right back to `npm-lifecycle`. Because `npm-lifecycle` is a solid package, it's [very DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself). `stage` is passed in and `npm_lifecycle_event` is only set in a single location. The NPM devs have done a great job trimming the fat. You can't really complain about that one.
 
 #### `run-script`
 
 I originally started this morning with [the `run-script` command](https://github.com/npm/npm/blob/latest/lib/run-script.js). At first glance, that `cmdList` [looks pretty awesome](https://github.com/npm/npm/blob/latest/lib/run-script.js#L67). Loading it in the REPL kills some of that joy:
+
 ```bash
 $ node
 > const runScript = require("./lib/run-script")
@@ -259,13 +288,14 @@ undefined
   usage: 'npm run-script <command> [-- <args>...]\n\naliases: run, rum',
   completion: [Function] }
 ```
+
 The important function, `list`, isn't accessible from the outside. We could modify the file itself, but that would involve messing with an API that wasn't exposed. It's more of a nothing-else-worked option than anything else. We might come back to it.
 
 #### `npm-lifecycle` Usage
 
 Because `npm-lifecycle` is the official package, it has to be used. There's a chance its implementation will highlight the stages. To reduce extraneous results (e.g. the static docs), we can shrink the input to only important directories. Based on some of my earlier `grep`ping, it looks like [`lib` directory](https://github.com/npm/npm/tree/latest/lib) and [`node_modules` directory](https://github.com/npm/npm/tree/latest/node_modules) are the only ones that contain active lifecycle code.
 
-<pre style="max-height: 300px; overflow: auto;"><code class="language-bash">
+```bash
 $ grep -R "lifecycle" node_modules --exclude-dir='npm-lifecycle'
 node_modules/cacache/node_modules/lru-cache/node_modules/pseudomap/map.js:    process.env.npm_lifecycle_script === 'test')
 node_modules/libnpx/index.js:      // we take a bit of extra time to pick up npm's full lifecycle script
@@ -287,9 +317,11 @@ node_modules/standard/node_modules/eslint-plugin-react/lib/rules/sort-comp.js:  
 node_modules/tap/node_modules/coveralls/node_modules/request/node_modules/hawk/test/browser.js:            it('goes through the full lifecycle', function (done) {
 node_modules/tap/node_modules/nyc/node_modules/center-align/utils.js: * point in the lifecycle of the application, whilst also
 node_modules/tap/node_modules/nyc/node_modules/pseudomap/map.js:    process.env.npm_lifecycle_script === 'test')
-</code></pre>
+```
+
 `node_modules` didn't turn up anything all that useful.
-<pre style="max-height: 300px; overflow: auto;"><code class="language-bash">
+
+```bash
 $ grep -R "lifecycle" lib
 lib/build.js:var lifecycle = require('./utils/lifecycle.js')
 lib/build.js:        !didPre && [lifecycle, pkg, 'preinstall', folder],
@@ -351,18 +383,20 @@ lib/version.js:  lifecycleData.&lowbar;id = data.name + '@' + newVersion
 lib/version.js:    [lifecycle, lifecycleData, 'preversion', where],
 lib/version.js:    [lifecycle, lifecycleData, 'version', where],
 lib/version.js:    [lifecycle, lifecycleData, 'postversion', where]
-</code></pre>
+```
+
 But `lib`, on the other hand, hit the jackpot. `npm-lifecycle` exports a [`lifecycle` function](https://github.com/npm/lifecycle/blob/latest/index.js#L32) whose signature is
-* `pkg`: the calling package
-* `stage`: the lifecycle stage
-* `wd`: the working directory for the stage
-* `opts`: any passed-in options to apply to the stage
+
+- `pkg`: the calling package
+- `stage`: the lifecycle stage
+- `wd`: the working directory for the stage
+- `opts`: any passed-in options to apply to the stage
 
 The odd `[lifecycle, something, stage, something, something]` ([example](https://github.com/npm/npm/blob/latest/lib/unbuild.js#L39)) comes from [the package `slide`](https://github.com/npm/slide-flow-control/blob/master/lib/chain.js); `chain` is doing exactly what you think it is&mdash;sequentially calling `lifecycle` with the rest of the array bound as parameters.
 
 For the most part, `lifecycle` is called via the `chain` syntax. But not always. It wouldn't be an open-source project if tons of people didn't contribute, and that means different files do things different ways. [The direct calls](https://github.com/npm/npm/blob/latest/lib/install/action/postinstall.js#L7) are pretty close to the `chain` calls, and the [out-of-left-field](https://github.com/npm/npm/blob/latest/lib/start.js#L1) calls match just enough of the other two that regex should work.
 
-<pre style="max-height: 300px; overflow: auto;"><code class="language-bash">
+```bash
 $ grep -RP "(?:lifecycle[\s\S]*?[,\(]\s*['\"])(\w[^\'\"\s\-]*?)[\'\"]" lib
 lib/build.js:        !didPre && [lifecycle, pkg, 'preinstall', folder],
 lib/build.js:        didPre !== build._noLC && [lifecycle, pkg, 'install', folder],
@@ -396,11 +430,12 @@ lib/unbuild.js:          [lifecycle, pkg, 'postuninstall', folder, { failOk: tru
 lib/version.js:    [lifecycle, lifecycleData, 'preversion', where],
 lib/version.js:    [lifecycle, lifecycleData, 'version', where],
 lib/version.js:    [lifecycle, lifecycleData, 'postversion', where]
-</code></pre>
+```
 
 ### Stream Editors to the Rescue
 
 Now that we have a pretty good idea how everything works, we can leverage external tools to find the stages:
+
 ```bash
 $ find . -type f -exec awk '\
     match($0, /lifecycle.*?[,\(]\s*['\''"]([a-zA-Z.]+)['\''"]/, a){\
@@ -423,18 +458,21 @@ test
 uninstall
 version
 ```
+
 `(g)awk`'s regex is much more opaque that the stuff I'm used to.
-* `find ... -exec awk`: standard stuff
-* `match($0, /lifecycle.*?[,\(]\s*['\''"]([a-zA-Z.]+)['\''"]/, a)`: We're only interested in lines that meet our pattern, `lifecycle< stuff >,|(< whitespace >?['"]word['"]`.
-* `match(a[1], /(pre|post)*(.+)/, b)`: Once we have those lines, we want to strip `pre|post` from the beginning
-* `gsub(/pare/, "prepare", b[2]);`: We stripped `pre` from `prepare`; without lookaheads, I don't know how to do this in a single pass
-* `gsub(/publishOnly/, "prepublishOnly", b[2]);`: same deal
-* `print b[2];`: spits out the word in quotes
-* `{} \+`: append each filename, i.e. run the command once (escape the `+` to be safe) ([man link](http://man7.org/linux/man-pages/man1/find.1.html) or `man --pager="less -p '-exec\s+command\s+\{\}\s+\+'" find`)
-* `sort`: sorts the output
-* `uniq`: strips duplicates
+
+- `find ... -exec awk`: standard stuff
+- `match($0, /lifecycle.*?[,\(]\s*['\''"]([a-zA-Z.]+)['\''"]/, a)`: We're only interested in lines that meet our pattern, `lifecycle< stuff >,|(< whitespace >?['"]word['"]`.
+- `match(a[1], /(pre|post)*(.+)/, b)`: Once we have those lines, we want to strip `pre|post` from the beginning
+- `gsub(/pare/, "prepare", b[2]);`: We stripped `pre` from `prepare`; without lookaheads, I don't know how to do this in a single pass
+- `gsub(/publishOnly/, "prepublishOnly", b[2]);`: same deal
+- `print b[2];`: spits out the word in quotes
+- `{} \+`: append each filename, i.e. run the command once (escape the `+` to be safe) ([man link](http://man7.org/linux/man-pages/man1/find.1.html) or `man --pager="less -p '-exec\s+command\s+\{\}\s+\+'" find`)
+- `sort`: sorts the output
+- `uniq`: strips duplicates
 
 To check, we can parse `lib/run-script` ([the file](#run-script) I said we should stay away from earlier):
+
 ```bash
 $ awk '\
     BEGIN{ RS="\n\n+"; }\
@@ -455,16 +493,18 @@ test
 uninstall
 version
 ```
-* `awk`: scary stuff
-* `BEGIN{ RS="\n\n+"; }`: change the `R`ecord `S`eparator to multiple newlines
-* `match($0, /cmdList[^=]*=[^\[]*\[([^\]]*)\]/, a)`: coaxing `(g)awk`'s regex to select as little as possible is not an easy task; I had to grab `[^<character>]*` to make things work
-* `while (match($0, /\w+/))`: We're assigning in a conditional because there isn't really a better way
-* `print substr($0, RSTART, RLENGTH);`: the pattern selected just the text; this prints it
-* `$0 = substr($0, RSTART + RLENGTH);`: this moves the starting character, meaning we won't refind old stuff
-* `lib/run-script.js`: as far as I know, the commands aren't anywhere else
-* `sort`: same as before; sorts for easy reading
+
+- `awk`: scary stuff
+- `BEGIN{ RS="\n\n+"; }`: change the `R`ecord `S`eparator to multiple newlines
+- `match($0, /cmdList[^=]*=[^\[]*\[([^\]]*)\]/, a)`: coaxing `(g)awk`'s regex to select as little as possible is not an easy task; I had to grab `[^<character>]*` to make things work
+- `while (match($0, /\w+/))`: We're assigning in a conditional because there isn't really a better way
+- `print substr($0, RSTART, RLENGTH);`: the pattern selected just the text; this prints it
+- `$0 = substr($0, RSTART + RLENGTH);`: this moves the starting character, meaning we won't refind old stuff
+- `lib/run-script.js`: as far as I know, the commands aren't anywhere else
+- `sort`: same as before; sorts for easy reading
 
 Let's compare the outputs (just because [we can](https://unix.stackexchange.com/a/27335)):
+
 ```bash
 $ diff <(find . -type f -exec awk 'match($0, /lifecycle.*?[,\(]\s*['\''"]([a-zA-Z.]+)['\''"]/, a){ match(a[1], /(pre|post)*(.+)/, b); gsub(/pare/, "prepare", b[2]); gsub(/publishOnly/, "prepublishOnly", b[2]); print b[2]; }' {} \+ | sort | uniq) <(awk 'BEGIN{ RS="\n\n+"; } match($0, /cmdList[^=]*=[^\[]*\[([^\]]*)\]/, a) { $0 = a[1]; while (match($0, /\w+/)) { print substr($0, RSTART, RLENGTH); $0 = substr($0, RSTART + RLENGTH); } }' lib/run-script.js | sort)
 2,4d1
@@ -474,9 +514,11 @@ $ diff <(find . -type f -exec awk 'match($0, /lifecycle.*?[,\(]\s*['\''"]([a-zA-
 7d3
 < shrinkwrap
 ```
+
 It looks like the `find ... awk` solution found more stages than `run-script` knows about, which is a good feeling.
 
 We've got one last place we can check for stages, `docs/misc/npm-scripts.md`:
+
 ```bash
 $ awk '\
     BEGIN{ RS="\n\n\n+"; }\
@@ -507,24 +549,24 @@ test
 uninstall
 version
 ```
-* `awk`: scary stuff
-* `BEGIN{ RS="\n\n\n+"; }`: change the `R`ecord `S`eparator to multiple newlines
-* `match($0, /## DESCRIPTION[^\#]*/, a)`: Only select the first block of text
-* `while(match($0, /\n\*([^\:]*)/, b))`: Pull out lines starting with `*`
-* `split(b[1], c, ",");`: split the string along commas
-* `for (i in c)`: loop over the elements of the exploded string
-* `gsub(/(pre|post)/, "", c[i]);`: strip prefix
-* `gsub(/pare/, "prepare", c[i]);`: fix `prepare`
-* `gsub(/publishOnly/, "prepublishOnly", c[i]);`: fix `prepublishOnly`
-* `gsub(/ /, "", c[i]);`: strip spaces
-* `print c[i];`: print the cleaned stage
-* `$0 = substr($0, RSTART + RLENGTH);`: increment the loop
-* `doc/misc/npm-scripts.md`: Only doc location I could find with everything
-* `sort`: same as before; sorts for easy reading
-* `uniq`: same as before; strip duplicates
+
+- `awk`: scary stuff
+- `BEGIN{ RS="\n\n\n+"; }`: change the `R`ecord `S`eparator to multiple newlines
+- `match($0, /## DESCRIPTION[^\#]*/, a)`: Only select the first block of text
+- `while(match($0, /\n\*([^\:]*)/, b))`: Pull out lines starting with `*`
+- `split(b[1], c, ",");`: split the string along commas
+- `for (i in c)`: loop over the elements of the exploded string
+- `gsub(/(pre|post)/, "", c[i]);`: strip prefix
+- `gsub(/pare/, "prepare", c[i]);`: fix `prepare`
+- `gsub(/publishOnly/, "prepublishOnly", c[i]);`: fix `prepublishOnly`
+- `gsub(/ /, "", c[i]);`: strip spaces
+- `print c[i];`: print the cleaned stage
+- `$0 = substr($0, RSTART + RLENGTH);`: increment the loop
+- `doc/misc/npm-scripts.md`: Only doc location I could find with everything
+- `sort`: same as before; sorts for easy reading
+- `uniq`: same as before; strip duplicates
 
 It looks like that doc file does contain all the stages. That's awesome, because it means we walked away with two solutions. That means we can both guess the lifecycles and check our guess against another source.
-
 
 ## Solutions Compiled
 
@@ -533,7 +575,7 @@ When I started down this path early this morning, I thought that finding the lif
 I've compiled this stuff (specifically the `find ... awk` and `awk ... doc` solutions) into a super tiny package ([GitHub](https://github.com/wizardsoftheweb/npm-lifecycle-stages#readme) | [NPM](https://www.npmjs.com/package/@wizardsoftheweb/npm-lifecycle-stages)). It exposes all the lifecycle stages as both an array and an enum whose keys are initialized with themselves. It has no dependencies, its version should match `npm`, it's got fairly autonomous logic, and, eventually, I'll get around to building historical versions.
 
 ```bash
-$ npm install --save @wizardsoftheweb/npm-lifecycle-stages
+npm install --save @wizardsoftheweb/npm-lifecycle-stages
 ```
 
 ### Examples
