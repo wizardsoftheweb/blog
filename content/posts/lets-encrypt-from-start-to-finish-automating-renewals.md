@@ -5,7 +5,7 @@ date: "2018-01-05T00:00:00.000Z"
 feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-7.png"
 author: "CJ Harries"
 description: "This post looks at several different ways to automate cert renewal, including cron and systemd options. You'll want to be able to send email from your server."
-tags: 
+tags:
   - Let's Encrypt from Start to Finish
   - certbot
   - Let's Encrypt
@@ -19,6 +19,7 @@ tags:
   - OpenSSL
 draft: true
 ---
+<!-- markdownlint-disable MD037 -->
 
 This is the sixth in a series of several posts on how to do way more than you really need to with Let's Encrypt, `certbot`, and a good server. I use all of these things regularly but I've never taken the time to take them apart, look at how they work, and spend hours in Google trying in vain to figure out how to put them back together. It was inspired by [a disturbing trend of ISP privacy violations](https://web.archive.org/web/20171214121709/http://forums.xfinity.com/t5/Customer-Service/Are-you-aware-Comcast-is-injecting-400-lines-of-JavaScript-into/td-p/3009551) and [the shocking regulatory capture of the US Federal Communications Commission](https://www.fcc.gov/document/fcc-takes-action-restore-internet-freedom).
 
@@ -26,22 +27,22 @@ This post looks at several different ways to automate cert renewal. I tried to c
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
 - [Note](#note)
-- [Automating Renewals](#automatingrenewals)
+- [Automating Renewals](#automating-renewals)
 - [Hooks](#hooks)
   - [Nginx](#nginx)
   - [Apache](#apache)
-- [Scripting a Renewal](#scriptingarenewal)
+- [Scripting a Renewal](#scripting-a-renewal)
   - [`at`](#at)
-    - [Block Scheduling](#blockscheduling)
-    - [Random Scheduling](#randomscheduling)
-- [Scheduling the Renewal](#schedulingtherenewal)
+    - [Block Scheduling](#block-scheduling)
+    - [Random Scheduling](#random-scheduling)
+- [Scheduling the Renewal](#scheduling-the-renewal)
   - [`cron`](#cron)
   - [`systemd`](#systemd)
-- [Before You Go](#beforeyougo)
-- [Legal Stuff](#legalstuff)
+- [Before You Go](#before-you-go)
+- [Legal Stuff](#legal-stuff)
 
 ## The Series so Far
 
@@ -53,9 +54,10 @@ This post looks at several different ways to automate cert renewal. I tried to c
 6. <a href="https://blog.wizardsoftheweb.pro/lets-encrypt-from-start-to-finish-automation" target="_blank">Automating Renewals</a>
 
 Things that are still planned but probably not soon:
-* Updating OpenSSL
-* CSP Playground
-* Vagrant Examples (don't hold your breath)
+
+- Updating OpenSSL
+- CSP Playground
+- Vagrant Examples (don't hold your breath)
 
 ## Code
 
@@ -178,10 +180,10 @@ In other words, `at` is a single-execution `cron`. It manages an `at` queue, mos
 <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> sudo yum install -y at<br><span class="gp" style="color:#66d9ef">$</span> sudo pkill -f atd<br><span class="gp" style="color:#66d9ef">$</span> sudo systemctl <span class="nb" style="color:#f8f8f2">enable</span> atd<br><span class="gp" style="color:#66d9ef">$</span> sudo systemctl start atd<br><span class="gp" style="color:#66d9ef">$</span> sudo systemctl status atd<br><span class="go" style="color:#888">● atd.service - Job spooling tools</span><br><span class="go" style="color:#888">   Loaded: loaded (/usr/lib/systemd/system/atd.service; enabled; vendor preset: enabled)</span><br><span class="go" style="color:#888">   Active: active (running) since Sun 2017-12-17 11:17:15 UTC; 4s ago</span><br><span class="go" style="color:#888"> Main PID: 47 (atd)</span><br><span class="go" style="color:#888">   CGroup: /system.slice/atd.service</span><br><span class="go" style="color:#888">           4747 /usr/sbin/atd -f</span><br><br><span class="go" style="color:#888">Dec 17 11:17:15 examplehost systemd[1]: Started Job spooling tools.</span><br><span class="go" style="color:#888">Dec 17 11:17:15 examplehost systemd[1]: Starting Job spooling tools...</span><br></pre></div>
 </td></tr></table>
 
-* `at` is the command itself
-* `atd` is the `at` daemon
-* `atq` is an alias for listing `at` jobs
-* `atrm` is an alias for removing `at` jobs
+- `at` is the command itself
+- `atd` is the `at` daemon
+- `atq` is an alias for listing `at` jobs
+- `atrm` is an alias for removing `at` jobs
 
 #### Block Scheduling
 
@@ -410,7 +412,7 @@ Let's Encrypt is a fantastic service. If you like what they do, i.e. appreciate 
 
 I'm still pretty new to the whole CYA legal thing. I really like everything I've covered here, and I've done my best to respect individual legal policies. If I screwed something up, please send me an email ASAP so I can fix it.
 
-* The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
-* Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
-* I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
-* Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).
+- The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
+- Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
+- I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
+- Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).
