@@ -5,7 +5,7 @@ date: "2017-12-17T05:00:00.000Z"
 feature_image: "/images/2017/12/certbot-hooks.png"
 author: "CJ Harries"
 description: "I spent some time ripping the code apart to see how hooks actually work. I've broken down where the hooks are defined, their configuration, and how you can modify them."
-tags: 
+tags:
   - certbot
   - Let's Encrypt
   - security
@@ -22,23 +22,21 @@ Hopefully this is useful to someone else. I got confused by the language change 
 
 - [Notes](#notes)
 - [Overview](#overview)
-- [Initial Change](#initialchange)
-    - [CLI](#cli)
-    - [Hook Definitions](#hookdefinitions)
-    - [Execution](#execution)
-- [Current API](#currentapi)
-    - [CLI](#cli1)
-    - [External Hooks](#externalhooks)
-    - [Hook Definitions](#hookdefinitions1)
-    - [Execution](#execution1)
-- [So What?](#sowhat)
-    - [Expect Change](#expectchange)
-    - [Manually Run Hooks After Initial Creation](#manuallyrunhooksafterinitialcreation)
-    - [Create a Generic Server Restart Hook](#createagenericserverrestarthook)
-        - [Nginx](#nginx)
-        - [Apache](#apache)
-    - [Pre- and Post-Hooks are Always Run](#pre-andpost-hooksarealwaysrun)
-- [Final Note](#finalnote)
+- [Initial Change](#initial-change)
+  - [CLI](#cli)
+  - [Hook Definitions](#hook-definitions)
+  - [Execution](#execution)
+- [Current API](#current-api)
+  - [Hook Definitions](#hook-definitions-1)
+  - [Execution](#execution-1)
+- [So What?](#so-what)
+  - [Expect Change](#expect-change)
+  - [Manually Run Hooks After Initial Creation](#manually-run-hooks-after-initial-creation)
+  - [Create a Generic Server Restart Hook](#create-a-generic-server-restart-hook)
+    - [Nginx](#nginx)
+    - [Apache](#apache)
+  - [Pre- and Post-Hooks are Always Run](#pre--and-post-hooks-are-always-run)
+- [Final Note](#final-note)
 
 <!-- /MarkdownTOC -->
 
@@ -57,7 +55,7 @@ Finally, I'm releasing this without all the code I wanted to write. It's been on
 I had some SSL issues several weekends ago. Something apparently went wrong with my `cron` job, and, while trying to verify everything, I realized the CLI flags were different. I was running this command (with absolute paths to mimic `cron`):
 
 ```bash
-$ /usr/bin/certbot renew --quiet --renew-hook "systemctl restart nginx"
+/usr/bin/certbot renew --quiet --renew-hook "systemctl restart nginx"
 ```
 
 However, I couldn't find it mentioned in the docs:
@@ -96,22 +94,25 @@ That sounded exactly like what I remembered reading about `--renew-hook`.
 
 ### CLI
 
-* `--renew-hook` was [suppressed in `cli.py`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/cli.py#L1094). It's still parsed, just not exposed in the help.
-* In its place, `--deploy-hook` was [added](https://github.com/certbot/certbot/blob/v0.17.0/certbot/cli.py#L1096).
-* At this point, [a `deploy_hook` is a `renew_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/cli.py#L1381) or [everything is a `renew_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/cli.py#L1392).
+- `--renew-hook` was [suppressed in `cli.py`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/cli.py#L1094). It's still parsed, just not exposed in the help.
+- In its place, `--deploy-hook` was [added](https://github.com/certbot/certbot/blob/v0.17.0/certbot/cli.py#L1096).
+- At this point, [a `deploy_hook` is a `renew_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/cli.py#L1381) or [everything is a `renew_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/cli.py#L1392).
 
 ### Hook Definitions
 
-* `renew_hook` was unchanged in `hooks.py` (aside from [some output language](https://github.com/certbot/certbot/blame/v0.17.0/certbot/hooks.py#L112)).
-* `deploy_hook` was created [as an adapter to `renew_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/hooks.py#L99). The conditional is deceptive; `config.deploy_hook == config.renew_hook` so there's no reason to not just explicitly call `renew_hook`.
+- `renew_hook` was unchanged in `hooks.py` (aside from [some output language](https://github.com/certbot/certbot/blame/v0.17.0/certbot/hooks.py#L112)).
+- `deploy_hook` was created [as an adapter to `renew_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/hooks.py#L99). The conditional is deceptive; `config.deploy_hook == config.renew_hook` so there's no reason to not just explicitly call `renew_hook`.
 
 ### Execution
 
 When a cert is installed for any reason (`renew|certonly|run`),
 
 1. [execute `pre_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/main.py#L71)
-2. 	* if the cert already exists and was changed, [execute `renew_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/renewal.py#L310) by [calling `renewal.renew_cert`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/main.py#L77)
-	* if the cert is new and was successfully created, [execute `deploy_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/main.py#L86)
+2. Either
+
+    - if the cert already exists and was changed, [execute `renew_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/renewal.py#L310) by [calling `renewal.renew_cert`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/main.py#L77)
+    - if the cert is new and was successfully created, [execute `deploy_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/main.py#L86)
+
 3. [execute `post_hook`](https://github.com/certbot/certbot/blob/v0.17.0/certbot/main.py#L88)
 
 ## Current API
@@ -122,9 +123,9 @@ This section uses [tag `v0.19.0`](https://github.com/certbot/certbot/tree/v0.19.
 
 There weren't many changes from `0.17` in the CLI setup.
 
-* `--renew-hook` is [suppressed in `cli.py`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1147). It's still parsed, just not exposed in the help
-* `--deploy-hook` [masks `--renew-hook`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1150)
-* Either [all the `deploy_hook`s are duplicated as `renew_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1461) or [there are only `renew_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1472)
+- `--renew-hook` is [suppressed in `cli.py`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1147). It's still parsed, just not exposed in the help
+- `--deploy-hook` [masks `--renew-hook`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1150)
+- Either [all the `deploy_hook`s are duplicated as `renew_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1461) or [there are only `renew_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/cli.py#L1472)
 
 <h3 id="externalhooks1">External Hooks</h3>
 
@@ -145,24 +146,32 @@ Similarly, you can [define global hooks](https://github.com/certbot/certbot/blob
 
 The hooks have been extensively refactored (which kinda happens often at major version `0`). `deploy_hook` is similar in name to the primary runner, `_run_deploy_hook`. However, the `deploy_hook` function is much slimmer than `renew_hook`, implying a continued reliance on `renew_hook`.
 
-* `_run_deploy_hook` is [a straight-forward runner](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L199). I'd argue its primary purpose is to collect command logging and state logic, which it does admirably.
-* `deploy_hook` is [a simple conditional](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L153) that executes any defined hooks.
-* `renew_hook` is [a bit larger](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L167). It begins by loading, caching, and executing [any hooks in `renewal_deploy_hooks_dir`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L185). The directory is [created in `configuration`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/configuration.py#L124) as a join on `config_dir` (which is likely [this default](https://github.com/certbot/certbot/blob/v0.19.0/certbot/constants.py#L83)), [the `RENEWAL_HOOKS_DIR` constant](https://github.com/certbot/certbot/blob/v0.19.0/certbot/constants.py#L180), and  [the `RENEWAL_DEPLOY_HOOKS_DIR` constant](https://github.com/certbot/certbot/blob/v0.19.0/certbot/constants.py#L186). Once finished, it [executes any `renew_hook` that wasn't included in `renewal_deploy_hooks_dir`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L190).
+- `_run_deploy_hook` is [a straight-forward runner](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L199). I'd argue its primary purpose is to collect command logging and state logic, which it does admirably.
+- `deploy_hook` is [a simple conditional](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L153) that executes any defined hooks.
+- `renew_hook` is [a bit larger](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L167). It begins by loading, caching, and executing [any hooks in `renewal_deploy_hooks_dir`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L185). The directory is [created in `configuration`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/configuration.py#L124) as a join on `config_dir` (which is likely [this default](https://github.com/certbot/certbot/blob/v0.19.0/certbot/constants.py#L83)), [the `RENEWAL_HOOKS_DIR` constant](https://github.com/certbot/certbot/blob/v0.19.0/certbot/constants.py#L180), and  [the `RENEWAL_DEPLOY_HOOKS_DIR` constant](https://github.com/certbot/certbot/blob/v0.19.0/certbot/constants.py#L186). Once finished, it [executes any `renew_hook` that wasn't included in `renewal_deploy_hooks_dir`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L190).
 
 ### Execution
 
 This breakdown is a bit messier than before, with a few more branches to trace. When a cert is installed for any reason (`renew|certonly|run`),
 
 1. [execute `pre_hook`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/main.py#L74):
-    * if renewing and the external `pre_hook`s directory exists, [run the global `pre_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L71).
-    * run any [defined `pre_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L75) (if they weren't already run) 
-2. 	* if the cert already exists and was changed, [execute `renew_hook`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/renewal.py#L310) by [calling `renewal.renew_cert`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/main.py#L80)
-        * if the external `deploy_hook`s directory exists and contains hooks, [run them](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L185)
-        * if a `renew_hook` exists and was not run, [run it](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L190)
-	* if the cert is new and was successfully created, [execute `deploy_hook`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/main.py#L89), which [skips the external `deploy_hook` directory](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L162)
+
+    - if renewing and the external `pre_hook`s directory exists, [run the global `pre_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L71).
+    - run any [defined `pre_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L75) (if they weren't already run)
+
+2. Either
+
+    - if the cert already exists and was changed, [execute `renew_hook`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/renewal.py#L310) by [calling `renewal.renew_cert`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/main.py#L80)
+
+        - if the external `deploy_hook`s directory exists and contains hooks, [run them](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L185)
+        - if a `renew_hook` exists and was not run, [run it](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L190)
+
+    - if the cert is new and was successfully created, [execute `deploy_hook`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/main.py#L89), which [skips the external `deploy_hook` directory](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L162)
+
 3. [execute `post_hook`](https://github.com/certbot/certbot/blob/v0.19.0/certbot/main.py#L91):
-    * if renewing and the external `post_hook`s directory exists, [run the global `post_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L119).
-    * run any [defined `post_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L128) (if they weren't already run)
+
+    - if renewing and the external `post_hook`s directory exists, [run the global `post_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L119).
+    - run any [defined `post_hook`s](https://github.com/certbot/certbot/blob/v0.19.0/certbot/hooks.py#L128) (if they weren't already run)
 
 ## So What?
 
