@@ -5,7 +5,7 @@ date: "2018-01-01T18:00:00.000Z"
 feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-4.png"
 author: "CJ Harries"
 description: "This post sets up all the backend security logic (minus headers). I've tried to provide an explanation of each component and good values to use."
-tags: 
+tags:
   - Let's Encrypt from Start to Finish
   - certbot
   - Let's Encrypt
@@ -26,21 +26,39 @@ This post sets up all the backend security logic (minus headers) to harden Nginx
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
 - [Note](#note)
-- [Primary Security Reference](#primarysecurityreference)
-- [Primary Config File](#primaryconfigfile)
-- [Specify Allowed TLS Versions](#specifyallowedtlsversions)
-- [Generate a List of Good Ciphers](#generatealistofgoodciphers)
-- [Specify ECDHE Curve](#specifyecdhecurve)
-- [Generate Diffie-Hellman Group](#generatediffiehellmangroup)
-- [Use Server Cipher Preference](#useservercipherpreference)
-- [OCSP Stapling](#ocspstapling)
-- [SSL Session](#sslsession)
-- [Primary Config File Redux](#primaryconfigfileredux)
-- [Before You Go](#beforeyougo)
-- [Legal Stuff](#legalstuff)
+- [Primary Security Reference](#primary-security-reference)
+- [Primary Config File](#primary-config-file)
+  - [Nginx](#nginx)
+  - [Apache](#apache)
+- [Specify Allowed TLS Versions](#specify-allowed-tls-versions)
+  - [Nginx](#nginx-1)
+  - [Apache](#apache-1)
+- [Generate a List of Good Ciphers](#generate-a-list-of-good-ciphers)
+  - [Nginx](#nginx-2)
+  - [Apache](#apache-2)
+- [Specify ECDHE Curve](#specify-ecdhe-curve)
+  - [Nginx](#nginx-3)
+  - [Apache](#apache-3)
+- [Generate Diffie-Hellman Group](#generate-diffie-hellman-group)
+  - [Nginx](#nginx-4)
+  - [Apache](#apache-4)
+- [Use Server Cipher Preference](#use-server-cipher-preference)
+  - [Nginx](#nginx-5)
+  - [Apache](#apache-5)
+- [OCSP Stapling](#ocsp-stapling)
+  - [Nginx](#nginx-6)
+  - [Apache](#apache-6)
+- [SSL Session](#ssl-session)
+  - [Nginx](#nginx-7)
+  - [Apache](#apache-7)
+- [Primary Config File Redux](#primary-config-file-redux)
+  - [Nginx](#nginx-8)
+  - [Apache](#apache-8)
+- [Before You Go](#before-you-go)
+- [Legal Stuff](#legal-stuff)
 
 ## The Series so Far
 
@@ -52,9 +70,10 @@ This post sets up all the backend security logic (minus headers) to harden Nginx
 6. <!--<a href="https://blog.wizardsoftheweb.pro/lets-encrypt-from-start-to-finish-automation" target="_blank">-->Automating Renewals<!--</a>-->
 
 Things that are still planned but probably not soon:
-* Updating OpenSSL
-* CSP Playground
-* Vagrant Examples (don't hold your breath)
+
+- Updating OpenSSL
+- CSP Playground
+- Vagrant Examples (don't hold your breath)
 
 ## Code
 
@@ -98,14 +117,14 @@ You'll also need to ensure you've got the right modules installed and running. D
 <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> which a2enmod <span class="o" style="color:#f92672">&amp;&amp;</span> <span class="nb" style="color:#f8f8f2">echo</span> <span class="s2" style="color:#e6db74">"apache2"</span> <span class="o" style="color:#f92672">||</span> <span class="nb" style="color:#f8f8f2">echo</span> <span class="s2" style="color:#e6db74">"httpd"</span><br><span class="go" style="color:#888">RHEL is usually httpd</span><br><span class="go" style="color:#888">Debian is usually apache2</span><br></pre></div>
 </td></tr></table>
 
-* If you're running `httpd`, enable them by editing `/etc/httpd/conf.modules.d/00-base.conf` (or another file there; you might have to `grep` them out).
-* If you're running `apache2`, enable them via `a2enmod`.
+- If you're running `httpd`, enable them by editing `/etc/httpd/conf.modules.d/00-base.conf` (or another file there; you might have to `grep` them out).
+- If you're running `apache2`, enable them via `a2enmod`.
 
 You'll need these modules:
 
-* `mod_rewrite`
-* `mod_ssl`
-* `mod_socache_shmcb` for any caching (sessions, stapling)
+- `mod_rewrite`
+- `mod_ssl`
+- `mod_socache_shmcb` for any caching (sessions, stapling)
 
 <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
 <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> <span class="nb" style="color:#f8f8f2">eval</span> <span class="s2" style="color:#e6db74">"</span><span class="k" style="color:#66d9ef">$(</span>which apachectl <span class="o" style="color:#f92672">&amp;&amp;</span> <span class="nb" style="color:#f8f8f2">echo</span> apachectl <span class="o" style="color:#f92672">||</span> <span class="nb" style="color:#f8f8f2">echo</span> httpd<span class="k" style="color:#66d9ef">)</span><span class="s2" style="color:#e6db74"> -M"</span> <span class="p">|</span> grep -E <span class="s2" style="color:#e6db74">"rewrite|shmcb|ssl"</span><br><span class="go" style="color:#888"> rewrite_module (shared)</span><br><span class="go" style="color:#888"> socache_shmcb_module (shared)</span><br><span class="go" style="color:#888"> ssl_module (shared)</span><br></pre></div>
@@ -446,7 +465,7 @@ Let's Encrypt is a fantastic service. If you like what they do, i.e. appreciate 
 
 I'm still pretty new to the whole CYA legal thing. I really like everything I've covered here, and I've done my best to respect individual legal policies. If I screwed something up, please send me an email ASAP so I can fix it.
 
-* The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
-* Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
-* I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
-* Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).
+- The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
+- Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
+- I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
+- Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).

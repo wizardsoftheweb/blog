@@ -5,7 +5,7 @@ date: "2017-12-31T18:00:00.000Z"
 feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-3.png"
 author: "CJ Harries"
 description: "This post is a catch-all for many things: good resources, certbot installation, and my approach to reusing Let's Encrypt config."
-tags: 
+tags:
   - Let's Encrypt from Start to Finish
   - certbot
   - Let's Encrypt
@@ -26,20 +26,20 @@ This post is a catch-all for items that aren't closely related to the other majo
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
 - [Note](#note)
-- [Prototypical Resources](#prototypicalresources)
+- [Prototypical Resources](#prototypical-resources)
 - [Requirements](#requirements)
 - [`certbot`](#certbot)
-- [Common Let's Encrypt Elements](#commonletsencryptelements)
-  - [Group and Directory Creation](#groupanddirectorycreation)
-  - [Share and Test Access](#shareandtestaccess)
-  - [Reuse Location](#reuselocation)
+- [Common Let's Encrypt Elements](#common-lets-encrypt-elements)
+  - [Group and Directory Creation](#group-and-directory-creation)
+  - [Share and Test Access](#share-and-test-access)
+  - [Reuse Location](#reuse-location)
     - [Nginx](#nginx)
     - [Apache](#apache)
-- [Before You Go](#beforeyougo)
-- [Legal Stuff](#legalstuff)
+- [Before You Go](#before-you-go)
+- [Legal Stuff](#legal-stuff)
 
 ## The Series so Far
 
@@ -51,9 +51,10 @@ This post is a catch-all for items that aren't closely related to the other majo
 6. <!--<a href="https://blog.wizardsoftheweb.pro/lets-encrypt-from-start-to-finish-automation" target="_blank">-->Automating Renewals<!--</a>-->
 
 Things that are still planned but probably not soon:
-* Updating OpenSSL
-* CSP Playground
-* Vagrant Examples (don't hold your breath)
+
+- Updating OpenSSL
+- CSP Playground
+- Vagrant Examples (don't hold your breath)
 
 ## Code
 
@@ -67,18 +68,18 @@ I'm testing out some new tooling. This will be [`wotw-highlighter`'s shakedown r
 
 I've been shuffling around copypasta Let's Encrypt config since, I think, the middle of last year (the company's only 19 months old, so it couldn't have been much longer than that). I don't have VCS versions of any of that, so unfortunately I can't point to a single article or book that shaped this. This list deserves highlighting if for no other reason than I had the link saved and totally forgot where I was going to use it.
 
-* [This Gist](https://gist.github.com/cecilemuller/a26737699a7e70a7093d4dc115915de8) is a great resource to snag a stable config you can put almost anywhere.
-* [This Gist](https://gist.github.com/AndreiD/3d4b36c58fa59c8ec1ef98276eacb636) is another great resouce. I believe I've had portions of it in production at some point.
-* [Qualys SSL Labs](https://www.ssllabs.com/) is the SSL gold standard. If you don't have a good Qualys rating, you don't have a good config.
-* Mozilla provides [a great generator](https://mozilla.github.io/server-side-tls/ssl-config-generator/) that's probably responsible for a fair chunk of the articles out there now.
+- [This Gist](https://gist.github.com/cecilemuller/a26737699a7e70a7093d4dc115915de8) is a great resource to snag a stable config you can put almost anywhere.
+- [This Gist](https://gist.github.com/AndreiD/3d4b36c58fa59c8ec1ef98276eacb636) is another great resouce. I believe I've had portions of it in production at some point.
+- [Qualys SSL Labs](https://www.ssllabs.com/) is the SSL gold standard. If you don't have a good Qualys rating, you don't have a good config.
+- Mozilla provides [a great generator](https://mozilla.github.io/server-side-tls/ssl-config-generator/) that's probably responsible for a fair chunk of the articles out there now.
 
 ## Requirements
 
-* [OpenSSL](https://www.openssl.org/): This entire series is written around `openssl` usage. As far as I know, it's necessary for any of the common webservers. If you can't get OpenSSL, there's a really good chance you shouldn't be serving from your machine.
-* A web server:
-    * [Nginx](https://www.nginx.com/): I'd recommend [at least `v1.12`](https://www.nginx.com/blog/nginx-1-12-1-13-released/) if possible. I can't point to specific sources, but I remember reading something about that at some point during my research this weekend. It is almost a year old by now.
-    * [Apache](http://www.apache.org/): To follow a majority of the instructions I was able to find easily, you'll need at least `v2.4`  [to access `mod_socache_shmcb`](https://httpd.apache.org/docs/2.4/mod/mod_socache_shmcb.html). The alternatives I remember were somehow even more opaque than `shmcb`, so I avoided them.
-    * You're on your own with something else. You can most likely figure out what you need to know with these examples, your server's docs, and Google.
+- [OpenSSL](https://www.openssl.org/): This entire series is written around `openssl` usage. As far as I know, it's necessary for any of the common webservers. If you can't get OpenSSL, there's a really good chance you shouldn't be serving from your machine.
+- A web server:
+  - [Nginx](https://www.nginx.com/): I'd recommend [at least `v1.12`](https://www.nginx.com/blog/nginx-1-12-1-13-released/) if possible. I can't point to specific sources, but I remember reading something about that at some point during my research this weekend. It is almost a year old by now.
+  - [Apache](http://www.apache.org/): To follow a majority of the instructions I was able to find easily, you'll need at least `v2.4`  [to access `mod_socache_shmcb`](https://httpd.apache.org/docs/2.4/mod/mod_socache_shmcb.html). The alternatives I remember were somehow even more opaque than `shmcb`, so I avoided them.
+  - You're on your own with something else. You can most likely figure out what you need to know with these examples, your server's docs, and Google.
 
 ## `certbot`
 
@@ -175,7 +176,7 @@ Let's Encrypt is a fantastic service. If you like what they do, i.e. appreciate 
 
 I'm still pretty new to the whole CYA legal thing. I really like everything I've covered here, and I've done my best to respect individual legal policies. If I screwed something up, please send me an email ASAP so I can fix it.
 
-* The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
-* Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
-* I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
-* Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).
+- The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
+- Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
+- I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
+- Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).

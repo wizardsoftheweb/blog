@@ -5,7 +5,7 @@ date: "2018-01-02T18:00:00.000Z"
 feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-5.png"
 author: "CJ Harries"
 description: "This post looks at common security headers. I've tried to explain what each one does, where it's helpful, and where it's not. I strongly recommend using HSTS."
-tags: 
+tags:
   - Let's Encrypt from Start to Finish
   - certbot
   - Let's Encrypt
@@ -26,25 +26,39 @@ This post looks at a collection of useful security headers. I've tried to explai
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
 - [Note](#note)
-- [Primary Security Reference](#primarysecurityreference)
+- [Primary Security Reference](#primary-security-reference)
 - [Caveat](#caveat)
-- [Primary Header Config](#primaryheaderconfig)
-- [Force Secure Communication](#forcesecurecommunication)
-- [The Kitchen Sink](#thekitchensink)
-    - [I Made This](#imadethis)
-- [Prevent Clickjacking (Historical)](#preventclickjackinghistorical)
-- [Cross-Site Scripting](#crosssitescripting)
-- [Content Sniffing](#contentsniffing)
+- [Primary Header Config](#primary-header-config)
+  - [Nginx](#nginx)
+  - [Apache](#apache)
+- [Force Secure Communication](#force-secure-communication)
+  - [Nginx](#nginx-1)
+  - [Apache](#apache-1)
+- [The Kitchen Sink](#the-kitchen-sink)
+  - [Sources](#sources)
+  - [Frames](#frames)
+    - [I Made This](#i-made-this)
+- [Prevent Clickjacking (Historical)](#prevent-clickjacking-historical)
+  - [Nginx](#nginx-2)
+  - [Apache](#apache-2)
+- [Cross-Site Scripting](#cross-site-scripting)
+  - [Nginx](#nginx-3)
+  - [Apache](#apache-3)
+- [Content Sniffing](#content-sniffing)
+  - [Nginx](#nginx-4)
+  - [Apache](#apache-4)
 - [Referer](#referer)
-- [Primary Header Config Redux](#primaryheaderconfigredux)
-- [But What About...](#butwhatabout)
-  - [Public Key Pinning](#publickeypinning)
-  - [Cross-Domain Policies](#crossdomainpolicies)
-- [Before You Go](#beforeyougo)
-- [Legal Stuff](#legalstuff)
+- [Primary Header Config Redux](#primary-header-config-redux)
+  - [Nginx](#nginx-5)
+  - [Apache](#apache-5)
+- [But What About](#but-what-about)
+  - [Public Key Pinning](#public-key-pinning)
+  - [Cross-Domain Policies](#cross-domain-policies)
+- [Before You Go](#before-you-go)
+- [Legal Stuff](#legal-stuff)
 
 ## The Series so Far
 
@@ -56,9 +70,10 @@ This post looks at a collection of useful security headers. I've tried to explai
 6. <!--<a href="https://blog.wizardsoftheweb.pro/lets-encrypt-from-start-to-finish-automation" target="_blank">-->Automating Renewals<!--</a>-->
 
 Things that are still planned but probably not soon:
-* Updating OpenSSL
-* CSP Playground
-* Vagrant Examples (don't hold your breath)
+
+- Updating OpenSSL
+- CSP Playground
+- Vagrant Examples (don't hold your breath)
 
 ## Code
 
@@ -100,15 +115,15 @@ I like to split the crypto config and header config. I'm always going to want to
 
 As [previously mentioned](https://blog.wizardsoftheweb.pro/lets-encrypt-from-start-to-finish-overview/#hsts), HSTS ensures users use secure protocols. The HSTS header, `Strict-Transport-Security`, has three primary options:
 
-* `max-age`: This specifies the maximum amount of time a user agent (browser) should cache the header. To make things easier, we'll give the cache a half-life of two years:
+- `max-age`: This specifies the maximum amount of time a user agent (browser) should cache the header. To make things easier, we'll give the cache a half-life of two years:
 
     ![63072000-origin-1](/images/2017/12/63072000-origin-1.png)
 
     Twitter uses [20 years](https://github.com/twitter/secureheaders#default-values). Most sites either use one or two years. Qualys wants to see [at least 120 days](https://blog.qualys.com/securitylabs/2016/03/28/the-importance-of-a-proper-http-strict-transport-security-implementation-on-your-web-server).
 
-* `includeSubdomains`: Without including subdomains, there are apparently [some cookie attacks](https://www.owasp.org/index.php/HTTP_Strict_Transport_Security_Cheat_Sheet#Problems) that can still be run. However, if you explicitly cannot serve subdomain content securely, this will cause problems. Err on the side of caution but check you subdomains.
+- `includeSubdomains`: Without including subdomains, there are apparently [some cookie attacks](https://www.owasp.org/index.php/HTTP_Strict_Transport_Security_Cheat_Sheet#Problems) that can still be run. However, if you explicitly cannot serve subdomain content securely, this will cause problems. Err on the side of caution but check you subdomains.
 
-* `preload`: You can [submit your HSTS site](https://hstspreload.org/) to an external list. This is [a long-term commitment](https://hstspreload.org/#removal), so don't submit your site unless you're sure about config. I won't be using it here because of the extra steps, but I highly recommend it if you've got a stable setup.
+- `preload`: You can [submit your HSTS site](https://hstspreload.org/) to an external list. This is [a long-term commitment](https://hstspreload.org/#removal), so don't submit your site unless you're sure about config. I won't be using it here because of the extra steps, but I highly recommend it if you've got a stable setup.
 
 HSTS will forcefully break your site if you don't have a proper TLS setup. Remember, it's cached by the user agent, not something you have control over. You [can nuke it](https://www.thesslstore.com/blog/clear-hsts-settings-chrome-firefox/) when necessary, but it is a hassle to do so.
 
@@ -154,24 +169,24 @@ CSPs provide granular source definitions. The `default-src` directive is used fo
 
 Sources themselves have [lots of options](https://content-security-policy.com/#source_list).
 
-* `*` allows anything, i.e. don't use this
-* `'self'` allows content from the same origin
-* `example.com` allows content from `example.com`
-* `https:` allows anything over TLS
-* `'unsafe-(inline|eval)'` allows inline and dynamic execution and styling
+- `*` allows anything, i.e. don't use this
+- `'self'` allows content from the same origin
+- `example.com` allows content from `example.com`
+- `https:` allows anything over TLS
+- `'unsafe-(inline|eval)'` allows inline and dynamic execution and styling
 
 CSP [currently defines](https://content-security-policy.com/#directive) the following `-src` directives:
 
-* catch-all: `default-src`
-* JavaScript: `script-src`
-* stylesheets: `style-src`
-* images: `img-src`
-* AJAX, sockets, and events: `connect-src`
-* fonts: `font-src`
-* plugins: `object-src`
-* HTML5 media: `media-src`
-* `iframe`s and web workers: `child-src`
-* form actions: `form-action`
+- catch-all: `default-src`
+- JavaScript: `script-src`
+- stylesheets: `style-src`
+- images: `img-src`
+- AJAX, sockets, and events: `connect-src`
+- fonts: `font-src`
+- plugins: `object-src`
+- HTML5 media: `media-src`
+- `iframe`s and web workers: `child-src`
+- form actions: `form-action`
 
 For example, suppose you're serving all your own content but need [a Google font](https://fonts.google.com/) to maintain consistent styling.
 
@@ -355,7 +370,7 @@ For the `n`th time, I'd like to reiterate that I haven't actually tested this co
 </tr>
 </table>
 
-## But What About...
+## But What About
 
 ### Public Key Pinning
 
@@ -373,7 +388,7 @@ Let's Encrypt is a fantastic service. If you like what they do, i.e. appreciate 
 
 I'm still pretty new to the whole CYA legal thing. I really like everything I've covered here, and I've done my best to respect individual legal policies. If I screwed something up, please send me an email ASAP so I can fix it.
 
-* The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
-* Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
-* I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
-* Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).
+- The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
+- Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
+- I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
+- Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).

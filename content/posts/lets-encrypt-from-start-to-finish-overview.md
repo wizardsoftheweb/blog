@@ -4,7 +4,7 @@ slug: "lets-encrypt-from-start-to-finish-overview"
 date: "2017-12-23T01:00:00.000Z"
 feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-1.png"
 author: "CJ Harries"
-tags: 
+tags:
   - Let's Encrypt from Start to Finish
   - certbot
   - Let's Encrypt
@@ -25,16 +25,16 @@ This post begins with the sad state of affairs that is the current US internet l
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
-- [The Status Quo](#thestatusquo)
-- [Why Introduce This?](#whyintroducethis)
-- [HTTP vs HTTPS](#httpvshttps)
+- [The Status Quo](#the-status-quo)
+- [Why Introduce This?](#why-introduce-this)
+- [HTTP vs HTTPS](#http-vs-https)
 - [HSTS](#hsts)
-- [Let's Encrypt](#letsencrypt)
+- [Let's Encrypt](#lets-encrypt)
 - [`certbot`](#certbot)
-- [Before You Go](#beforeyougo)
-- [Legal Stuff](#legalstuff)
+- [Before You Go](#before-you-go)
+- [Legal Stuff](#legal-stuff)
 
 ## The Series so Far
 
@@ -103,7 +103,7 @@ Let's Encrypt is a fantastic service. If you like what they do, i.e. appreciate 
 
 I'm still pretty new to the whole CYA legal thing. I really like everything I've covered here, and I've done my best to respect individual legal policies. If I screwed something up, please send me an email ASAP so I can fix it.
 
-* The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
-* Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
-* I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
-* Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).
+- The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
+- Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
+- I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
+- Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).

@@ -5,7 +5,7 @@ date: "2018-01-04T00:00:00.000Z"
 feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-6.png"
 author: "CJ Harries"
 description: "This post wraps up the server config and puts it to use. It covers my approach to generating a cert, and provides some useful `openssl` commands for verification."
-tags: 
+tags:
   - Let's Encrypt from Start to Finish
   - certbot
   - Let's Encrypt
@@ -26,18 +26,26 @@ This post wraps up (most of) the server config and puts it to use. It covers my 
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
 - [Note](#note)
-- [Prepare the Site](#preparethesite)
-- [Providing the User Challenge Access](#providingtheuserchallengeaccess)
-- [Include the Challenge Config](#includethechallengeconfig)
-- [Generate the Cert](#generatethecert)
-- [Wiring up the Cert](#wiringupthecert)
-- [Restart the Server](#restarttheserver)
-- [Testing with OpenSSL](#testingwithopenssl)
-- [Before You Go](#beforeyougo)
-- [Legal Stuff](#legalstuff)
+- [Prepare the Site](#prepare-the-site)
+  - [Nginx](#nginx)
+  - [Apache](#apache)
+- [Providing the User Challenge Access](#providing-the-user-challenge-access)
+- [Include the Challenge Config](#include-the-challenge-config)
+  - [Nginx](#nginx-1)
+  - [Apache](#apache-1)
+- [Generate the Cert](#generate-the-cert)
+- [Wiring up the Cert](#wiring-up-the-cert)
+  - [Nginx](#nginx-2)
+  - [Apache](#apache-2)
+- [Restart the Server](#restart-the-server)
+  - [Nginx](#nginx-3)
+  - [Apache](#apache-3)
+- [Testing with OpenSSL](#testing-with-openssl)
+- [Before You Go](#before-you-go)
+- [Legal Stuff](#legal-stuff)
 
 ## The Series so Far
 
@@ -49,9 +57,10 @@ This post wraps up (most of) the server config and puts it to use. It covers my 
 6. <!--<a href="https://blog.wizardsoftheweb.pro/lets-encrypt-from-start-to-finish-automation" target="_blank">-->Automating Renewals<!--</a>-->
 
 Things that are still planned but probably not soon:
-* Updating OpenSSL
-* CSP Playground
-* Vagrant Examples (don't hold your breath)
+
+- Updating OpenSSL
+- CSP Playground
+- Vagrant Examples (don't hold your breath)
 
 ## Code
 
@@ -170,12 +179,12 @@ We set up [a challenge directory earlier](https://blog.wizardsoftheweb.pro/lets-
 
 With everything in place, we can finally create a cert. All of this manual configuration was done to give us some flexibility over the final product. We're going to pass `certbot` a ton of options to handle this
 
-* We only want a cert, not an installation
-* We're going to agree to [the TOS](https://letsencrypt.org/repository/)
-* We're going to register an email for important contacts
-* We're going to skip joining [the EFF email list](https://www.eff.org/effector)
-* We're going to specify the webroot (i.e. the directory to place the challenges)
-* We're going to specify all the domains AND subdomains on the cert
+- We only want a cert, not an installation
+- We're going to agree to [the TOS](https://letsencrypt.org/repository/)
+- We're going to register an email for important contacts
+- We're going to skip joining [the EFF email list](https://www.eff.org/effector)
+- We're going to specify the webroot (i.e. the directory to place the challenges)
+- We're going to specify all the domains AND subdomains on the cert
 
 <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
 <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> certbot                       <span class="se" style="color:#ae81ff">\</span><br>    certonly                    <span class="se" style="color:#ae81ff">\</span><br>    --agree-tos                 <span class="se" style="color:#ae81ff">\</span><br>    --email your@email.address  <span class="se" style="color:#ae81ff">\</span><br>    --no-eff-email              <span class="se" style="color:#ae81ff">\</span><br>    --webroot                   <span class="se" style="color:#ae81ff">\</span><br>    -w /srv/www/letsencrypt     <span class="se" style="color:#ae81ff">\</span><br>    -d example.com              <span class="se" style="color:#ae81ff">\</span><br>    -d www.example.com          <span class="se" style="color:#ae81ff">\</span><br>    -d anotherone.example.com<br></pre></div>
@@ -361,7 +370,7 @@ Let's Encrypt is a fantastic service. If you like what they do, i.e. appreciate 
 
 I'm still pretty new to the whole CYA legal thing. I really like everything I've covered here, and I've done my best to respect individual legal policies. If I screwed something up, please send me an email ASAP so I can fix it.
 
-* The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
-* Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
-* I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
-* Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).
+- The Electronic Frontier Foundation and `certbot` are covered by [EFF's generous copyright](https://www.eff.org/copyright). As far as I know, it's all under [CC BY 3.0 US](http://creativecommons.org/licenses/by/3.0/us/). I made a few minor tweaks to build the banner image but tried to respect the trademark. I don't know who the `certbot` logo artist is but I really wish I did because it's a fantastic piece of art.
+- Let's Encrypt [is trademarked](https://letsencrypt.org/trademarks/). Its logo uses [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I made a few minor tweaks to build the banner image but tried to respect the trademark.
+- I didn't find anything definitive (other than EULAs) covering Nginx, which doesn't mean it doesn't exist. Assets were taken [from its press page](https://www.nginx.com/press/).
+- Apache content was sourced from [its press page](https://www.apache.org/foundation/press/kit/). It provides [a full trademark policy](http://www.apache.org/foundation/marks/).
