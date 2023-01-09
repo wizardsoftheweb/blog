@@ -7,4 +7,4 @@ server:
 
 .PHONY: mdl
 mdl:
-	markdownlint content/posts
+	markdownlint --fix content/posts
