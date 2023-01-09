@@ -4,7 +4,7 @@ slug: "sensible-ssh-with-ansible-overview"
 date: "2017-11-08T01:00:00.000Z"
 feature_image: "/images/2017/11/gear-6.png"
 author: "CJ Harries"
-tags: 
+tags:
   - Sensible SSH with Ansible
   - Ansible
   - Vagrant
@@ -19,19 +19,19 @@ This is the first in a series of several posts on how to manage `ssh` via Ansibl
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
-- [Executive Summary](#executivesummary)
+- [Executive Summary](#executive-summary)
 - [Note](#note)
-    - [Compiling the Series Posts](#compilingtheseriesposts)
+  - [Compiling the Series Posts](#compiling-the-series-posts)
 - [Software](#software)
-    - [Main](#main)
-    - [Windows](#windows)
-    - [My Environment](#myenvironment)
-- [Tool Overview](#tooloverview)
-    - [`ssh`](#ssh)
-    - [Ansible](#ansible)
-    - [Optional: Vagrant](#optionalvagrant)
+  - [Main](#main)
+  - [Windows](#windows)
+  - [My Environment](#my-environment)
+- [Tool Overview](#tool-overview)
+  - [`ssh`](#ssh)
+  - [Ansible](#ansible)
+  - [Optional: Vagrant](#optional-vagrant)
 
 ## The Series so Far
 
@@ -55,7 +55,7 @@ I included all of the code (as opposed to lazy loading) for the AMP CDN, which m
 
 For the most part, you should assume a shell environment is a `bash` environment. I actually use `zsh`, so there might be some `zsh`isms mixed in. I've tried to make this run from start to finish via `/bin/bash`, so let me know if I missed something. The assumed-to-be-`bash` shell will look like this:
 
-```
+```bash
 $ bash --version
 GNU bash, version 4.3.46(1)-release (x86_64-pc-linux-gnu)
 Copyright (C) 2013 Free Software Foundation, Inc.
@@ -67,7 +67,7 @@ There is NO WARRANTY, to the extent permitted by law.
 
 There's at least one PowerShell snippet. I tried to differentiate the two shells, so PowerShell looks like this:
 
-```
+```powershell
 PS$ $PSVersionTable.PSVersion
 
 Major  Minor  Build  Revision
@@ -87,23 +87,23 @@ I mention this because there's a chance I missed something in the build process 
 
 ### Main
 
-* [Vagrant](https://www.vagrantup.com/) for the demo, but not necessary in the final setup
-* [OpenSSH](https://www.openssh.com/) (which is probably already on your system)
-* [Ansible](https://www.ansible.com/) for easy everything
+- [Vagrant](https://www.vagrantup.com/) for the demo, but not necessary in the final setup
+- [OpenSSH](https://www.openssh.com/) (which is probably already on your system)
+- [Ansible](https://www.ansible.com/) for easy everything
 
     Ansible depends on:
-    * [Python 2](https://www.python.org/downloads/) (`2.6` or `2.7`)
-    * `pip` ([quick install via curl](https://github.com/pypa/get-pip))
+  - [Python 2](https://www.python.org/downloads/) (`2.6` or `2.7`)
+  - `pip` ([quick install via curl](https://github.com/pypa/get-pip))
 
 ### Windows
 
 Unsurprisingly, trying to do normal things on Windows requires way more work.
 
-* [Windows Containers](https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/) will require some setup.
+- [Windows Containers](https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/) will require some setup.
 
     **WARNING**: Microsoft wrote their own containerization API (it relies on a different kernel, after all). Unsurprisingly, most of the things you think should work don't. Chances are you'll have to use defaults everywhere, which is so ridiculously insecure that you probably shouldn't use Windows Containers.
-* Hyper-V ([10](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) | [Server](https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/get-started/install-the-hyper-v-role-on-windows-server)) might be necessary as a provider for Vagrant. It's not pleasant, but you should probably also consider [setting up boot configs](http://www.hanselman.com/blog/SwitchEasilyBetweenVirtualBoxAndHyperVWithABCDEditBootEntryInWindows81.aspx) (unsurprisingly [still relevant](https://marcofranssen.nl/switch-between-hyper-v-and-virtualbox-on-windows/) for newer Windows).
-* [Ansible](http://docs.ansible.com/ansible/latest/intro_windows.html) flat out doesn't support Windows. You can use [Ansible through WSL](https://www.jeffgeerling.com/blog/2017/using-ansible-through-windows-10s-subsystem-linux), [Ansible with babun](https://github.com/tiangolo/ansible-babun-bootstrap), or anything else that can run `python` within a `bash` environment on Windows. Unsurprisingly, local support (i.e. true [control](http://docs.ansible.com/ansible/latest/intro_installation.html#control-machine-requirements)) is sketchy at best. Then again, the generally accepted method for managing `ssh` keys on Windows is PuTTy, which is so far from automatable it's not even funny.
+- Hyper-V ([10](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) | [Server](https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/get-started/install-the-hyper-v-role-on-windows-server)) might be necessary as a provider for Vagrant. It's not pleasant, but you should probably also consider [setting up boot configs](http://www.hanselman.com/blog/SwitchEasilyBetweenVirtualBoxAndHyperVWithABCDEditBootEntryInWindows81.aspx) (unsurprisingly [still relevant](https://marcofranssen.nl/switch-between-hyper-v-and-virtualbox-on-windows/) for newer Windows).
+- [Ansible](http://docs.ansible.com/ansible/latest/intro_windows.html) flat out doesn't support Windows. You can use [Ansible through WSL](https://www.jeffgeerling.com/blog/2017/using-ansible-through-windows-10s-subsystem-linux), [Ansible with babun](https://github.com/tiangolo/ansible-babun-bootstrap), or anything else that can run `python` within a `bash` environment on Windows. Unsurprisingly, local support (i.e. true [control](http://docs.ansible.com/ansible/latest/intro_installation.html#control-machine-requirements)) is sketchy at best. Then again, the generally accepted method for managing `ssh` keys on Windows is PuTTy, which is so far from automatable it's not even funny.
 
     **WARNING:** If you're trying to manage Windows from WSL or vice versa, [you're gonna have a bad time](https://stackoverflow.com/a/41526143). If you do use Ansible to configure WSL, do not expect things to work as intended outside of WSL (e.g. in PowerShell). Unsurprisingly, they will probably work until you least expect it and then you'll spend a day on StackOverflow discovering WSL makes no sense.
 
@@ -111,7 +111,7 @@ Unsurprisingly, trying to do normal things on Windows requires way more work.
 
 I'm running Window's 10 1709, ~~build 16299.19~~ build 17025.1000 (I'll try to keep this updated as I get new builds). Because of the [Windows limitations](#windows), I'll only be using the created virtual environments. That means Ansible is probably [the latest version](https://www.vagrantup.com/docs/provisioning/ansible_local.html#install) (`2.4.1` as of initial writing) and OpenSSH is tied to the VM's repositories ([pertinent packages](https://rpms.remirepo.net/rpmphp/zoom.php?rpm=openssh) are under "EL-7"). That means the my only real versions come from PowerShell:
 
-```
+```powershell
 # I'm too lazy to add the *-WindowsFeature cmdlets
 PS$ dism.exe /online /Get-Features | Select-String -Pattern " Containers" -Context 0,1
 
@@ -160,16 +160,16 @@ If you're comfortable with the tools listed below, you can skip their respective
 
 `ssh` assuages a few concerns central to exposed authentication.
 
-* Client and server both validate, so there's a good chance the intended parties (or someone with their keys) are actually communicating.
-* Communication happens in [an encrypted tunnel](https://en.wikipedia.org/wiki/Tunneling_protocol#Secure_Shell_tunneling), similar to [SSL/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security).
-* Authentication can be done via [public key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography) so as to never expose full credentials from either party
-* It uses [a well-defined standard](https://www.ssh.com/ssh/protocol/#sec-The-core-protocol) that can be extended as necessary, i.e. it's not chained to bad crypto.
+- Client and server both validate, so there's a good chance the intended parties (or someone with their keys) are actually communicating.
+- Communication happens in [an encrypted tunnel](https://en.wikipedia.org/wiki/Tunneling_protocol#Secure_Shell_tunneling), similar to [SSL/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security).
+- Authentication can be done via [public key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography) so as to never expose full credentials from either party
+- It uses [a well-defined standard](https://www.ssh.com/ssh/protocol/#sec-The-core-protocol) that can be extended as necessary, i.e. it's not chained to bad crypto.
 
 [OpenSSH](https://www.openssh.com/), the FOSS implementation common to most Linux distros, is usually split into two packages: a client package, containing the tools necessary to connect to a remote and manage keys (e.g. `ssh` and `ssh-add`, respectively), and a server package, containing the tools necessary to run an `ssh` host (e.g. `sshd`). It might seem like an annoyance initially, but it's actually a solid security feature by itself. Machines that do not need to host external `ssh` connections don't need the extra app, and, more importantly, they shouldn't have to secure the server defaults. Boxes that host an `ssh` server usually have both, but they're also tailored to secure the configuration (or at least should be).
 
 The client package, usually a variant of `openssh-client*`, contains a few important commands. `ssh-keygen` creates new keys (it can do [so much more](https://linux.die.net/man/1/ssh-keygen)).
 
-```
+```bash
 $ ssh-keygen
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/user/.ssh/id_rsa):
@@ -196,13 +196,13 @@ The key's randomart image is:
 
 `ssh-copy-id` takes local public keys and adds them to the `authorized_keys` file on the remote. After generating a key, you should send it where you want it.
 
-```
-$ ssh-copy-id remoteuser@remote
+```bash
+ssh-copy-id remoteuser@remote
 ```
 
 However, `ssh-copy-id` relies on potentially insecure handshakes to verify access, so if you've got access to both machines, this accomplishes the same thing:
 
-```
+```bash
 # local
 $ cat ~/.ssh/id_rsa.pub > ~/remoteuser_authorized_keys
 # move the file from local to remote
@@ -218,7 +218,7 @@ The extra permissions (`chmod`) setup is managed automatically by `ssh-keygen`, 
 
 Once keys are in place, `ssh` establishes the connection. By default, it assumes the server is listening on port `22` and the `id_rsa` identity should be used for everything ([the man page for `ssh`](https://linux.die.net/man/1/ssh) explains how to not use defaults):
 
-```
+```bash
 $ ssh user@host '/bin/true' || echo 'whoops'
 Enter passphrase for key '/home/user/.ssh/id_rsa':
 # shouldn't see whoops
@@ -226,7 +226,7 @@ Enter passphrase for key '/home/user/.ssh/id_rsa':
 
 Once multiple identities get involved (e.g. `user1@hosta` and `user2@hostb`), things get messy. Luckily OpenSSH includes tools to handle that. `ssh-agent` ([man here](https://linux.die.net/man/1/ssh-agent)) can hold identities and send them automatically to `ssh`.
 
-```
+```bash
 # Ensure it's running
 $ pgrep -f ssh-agent -u $(whoami) || ssh-agent $SHELL
 # Add key
@@ -261,22 +261,23 @@ I'm going to touch on Ansible components as I bring them in, so I'll leave findi
 
 If the idea of scripting your environment applies to you, you'll love [Vagrant](https://www.vagrantup.com/). It is a `ruby`-based VM manager with access to all the major hosts. It prides itself on [being easy to use](https://www.vagrantup.com/intro/getting-started/index.html); after installation, you can run
 
+```bash
+vagrant init hashicorp/precise64
+vagrant up
+vagrant ssh
 ```
-$ vagrant init hashicorp/precise64
-$ vagrant up
-$ vagrant ssh
-```
+
 and you're inside a virtual Ubuntu box.
 
 Because Vagrant is scriptable and can emulate anything with an image (basically anything you can find an `iso` of), it's a cheap and easy way to test host configurations. [Unlike Docker](https://docs.docker.com/engine/admin/volumes/), its default storage is persistent, as it creates full VMs for each box. As a primary goal of a containerized app is to be as slim and isolated as possible, installing the tooling for Ansible inside a container doesn't make much sense. I feel like Vagrant lends itself more to that role (Ansible pun intended) here, but if you really wanted to you could duplicate this via `Dockerfile`s. If your world is Docker containers inside Docker containers, you might want to do that.
 
 To run the provided `Vagrantfile`, clone the repo and run `vagrant` inside the directory.
 
-```
-$ git clone https://github.com/wizardsoftheweb/sensible-ssh-with-ansible.git
-$ cd sensible-ssh-with-ansible
-$ git checkout post-01-overview
-$ vagrant up
+```bash
+git clone https://github.com/wizardsoftheweb/sensible-ssh-with-ansible.git
+cd sensible-ssh-with-ansible
+git checkout post-01-overview
+vagrant up
 ```
 
 **WARNING:** If you're on Windows running vanilla Containers and Hyper-V, you'll probably need to add `--provider=hyperv` to all `up` commands. If you're not running vanilla, you're probably already aware that trying to run another provider while Hyper-V is running (which is always unless you changed the boot config) won't be pretty. I crashed my system three times one weekend, initially trying to figure out what was wrong and later because I forgot to force Hyper-V.
