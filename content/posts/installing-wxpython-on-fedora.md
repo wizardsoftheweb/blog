@@ -4,7 +4,7 @@ slug: "installing-wxpython-on-fedora"
 date: "2018-02-11T22:30:00.000Z"
 feature_image: "/images/2018/02/splash.png"
 author: "CJ Harries"
-tags: 
+tags:
   - wxPython
   - Fedora
   - CLI
@@ -24,7 +24,7 @@ It looks like [the prequisites](https://github.com/wxWidgets/Phoenix/#prerequisi
 <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> sudo dnf install -y <span class="o" style="color:#f92672">{</span>dpkg,freeglut,gstreamer<span class="o" style="color:#f92672">{</span>,1<span class="o" style="color:#f92672">}</span>-plugins-ba<span class="o" style="color:#f92672">{</span>se,d-free<span class="o" style="color:#f92672">}</span>,gtk3,lib<span class="o" style="color:#f92672">{</span>jpeg,notify,SM,tiff<span class="o" style="color:#f92672">}</span>,python<span class="o" style="color:#f92672">{</span><span class="m" style="color:#ae81ff">2</span>,3<span class="o" style="color:#f92672">}</span>,SDL<span class="o" style="color:#f92672">}{</span>,-devel<span class="o" style="color:#f92672">}</span> @development-tools<br><span class="go" style="color:#888">sudo dnf install -y dpkg dpkg-devel freeglut freeglut-devel gstreamer-plugins-base gstreamer-plugins-base-devel gstreamer-plugins-bad-free gstreamer-plugins-bad-free-devel gstreamer1-plugins-base gstreamer1-plugins-base-devel gstreamer1-plugins-bad-free gstreamer1-plugins-bad-free-devel gtk3 gtk3-devel libjpeg libjpeg-devel libnotify libnotify-devel libSM libSM-devel libtiff libtiff-devel python2 python2-devel python3 python3-devel SDL SDL-devel @development-tools</span><br></pre></div>
 </td></tr></table>
 
-Feel free [to skip ahead](#backontrack); the tangent is here because it's funny.
+Feel free [to skip ahead](#back-on-track); the tangent is here because it's funny.
 
 ## Tangent
 
