@@ -42,11 +42,11 @@ This post takes a cursory look at reflection with TypeScript. Its primary focus 
 
 Eventual Topics:
 
-* Where Decorators Work
-* Decorating Instance Elements vs. Static Elements
-* Examples
-    * Pairing Parameter Decorators with Method Decorators
-    * Pairing Property Decorators with Class Decorators
+- Where Decorators Work
+- Decorating Instance Elements vs. Static Elements
+- Examples
+  - Pairing Parameter Decorators with Method Decorators
+  - Pairing Property Decorators with Class Decorators
 
 ## Code
 
@@ -315,9 +315,9 @@ The `__metadata` declaration is brand new. It looks similar to the `__decorate` 
 
 `__metadata` attempts to create a `Reflect.metadata` factory (more on that soon). It passes `k`ey-`v`alue pairs to `Reflect.metadata`, which in turn stashes them away to be accessed later. By default, `emitDecoratorMetadata` exposes three new properties:
 
-* `design:type`: the type of the object being decorated (here a `Function`)
-* `design:paramtypes`: an array of types that match either the decorated item's signature or its constructor's signature (here `[Number]`)
-* `design:returntype`: the return type of the object being decorated (here `void 0`)
+- `design:type`: the type of the object being decorated (here a `Function`)
+- `design:paramtypes`: an array of types that match either the decorated item's signature or its constructor's signature (here `[Number]`)
+- `design:returntype`: the return type of the object being decorated (here `void 0`)
 
 At the bottom of the file in the `__decorate` call, you'll see the `__metadata` calls. Everything looks great. Except we're missing an important component.
 

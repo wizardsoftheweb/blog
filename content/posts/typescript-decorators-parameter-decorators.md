@@ -47,11 +47,11 @@ This post takes an in-depth look at parameter decorators. It examines their sign
 
 Eventual Topics:
 
-* Where Decorators Work
-* Decorating Instance Elements vs. Static Elements
-* Examples
-    * Pairing Parameter Decorators with Method Decorators
-    * Pairing Property Decorators with Class Decorators
+- Where Decorators Work
+- Decorating Instance Elements vs. Static Elements
+- Examples
+  - Pairing Parameter Decorators with Method Decorators
+  - Pairing Property Decorators with Class Decorators
 
 ## Code
 

@@ -17,6 +17,7 @@ tags:
   - antipattern
 draft: true
 ---
+<!-- markdownlint-disable MD052 -->
 
 This post takes an in-depth look at property decorators. It examines their signature, provides sample usage, and exposes a common antipattern. Reading the previous posts in the series is encouraged but not necessary.
 
@@ -45,8 +46,8 @@ This post takes an in-depth look at property decorators. It examines their signa
 
 These posts are planned but not written yet:
 
-* Method Decorators
-* Class Decorators
+- Method Decorators
+- Class Decorators
 
 ## Code
 

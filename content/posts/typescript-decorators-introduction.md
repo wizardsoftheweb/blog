@@ -42,11 +42,11 @@ This post serves as introduction to TypeScript decorators. It looks at basic dec
 
 Eventual Topics:
 
-* Where Decorators Work
-* Decorating Instance Elements vs. Static Elements
-* Examples
-    * Pairing Parameter Decorators with Method Decorators
-    * Pairing Property Decorators with Class Decorators
+- Where Decorators Work
+- Decorating Instance Elements vs. Static Elements
+- Examples
+  - Pairing Parameter Decorators with Method Decorators
+  - Pairing Property Decorators with Class Decorators
 
 ## Code
 
@@ -64,9 +64,9 @@ TypeScript decorators also provide some [mixin support](https://en.wikipedia.org
 
 To gain decorator functionality, you'll have to pass a few new options to the TypeScript compiler.
 
-* `target`: The docs mention [some issues below `ES5`](https://www.typescriptlang.org/docs/handbook/decorators.html) (ctrl+f `ES5`). I tend to run `ESNext` while developing.
-* `experimentalDecorators`: This is what enables the functionality.
-* `emitDecoratorMetadata`: This is another expermental feature that [provides decorator metadata](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata).
+- `target`: The docs mention [some issues below `ES5`](https://www.typescriptlang.org/docs/handbook/decorators.html) (ctrl+f `ES5`). I tend to run `ESNext` while developing.
+- `experimentalDecorators`: This is what enables the functionality.
+- `emitDecoratorMetadata`: This is another expermental feature that [provides decorator metadata](https://www.typescriptlang.org/docs/handbook/decorators.html#metadata).
 
 You can either include the options by hand every time
 
