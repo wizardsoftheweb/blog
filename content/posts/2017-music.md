@@ -28,7 +28,6 @@ tags:
   - The End
   - GosT
   - Behemoth
-draft: true
 ---
 
 I missed writing about music. Clicking on the album covers should take you somewhere to find out more about the album. I've compiled this list into [a quick Spotify playlist](https://open.spotify.com/user/wizardsoftheweb/playlist/4vlvMMLycUvp0Rx1GeKTVE).

@@ -5,14 +5,13 @@ date: "2017-09-08T06:00:00.000Z"
 feature_image: "/images/2017/09/keepass-and-konsole-2.png"
 author: "CJ Harries"
 description: "A great RDP-credential solution is KeePass (I recommend ~2; you'll see that here). Like other repetitive user-based CLI tasks, KeePass kills xfreerdp."
-tags: 
+tags:
   - KeePass
   - CLI
   - Linux
   - RDP
   - Automation
   - FreeRDP
-draft: true
 ---
 
 One of my primary work responsibilities is to handle the Linux environments not related to our ecommerce platform (although, as one of few devs, one of my primary responsibilities is basically everything). We're a big fan of the RHEL pipeline, so I use CentOS as my work environment. It bites occasionally, but, by and large, we don't run bleeding-edge stacks because they're, well, unsupported bleeding-edge stacks. I can find most of the software I need with older versions of Fedora or by just manually building things.
