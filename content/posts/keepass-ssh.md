@@ -5,7 +5,7 @@ date: "2017-09-09T11:00:00.000Z"
 feature_image: "/images/2017/09/post-markdown.png"
 author: "CJ Harries"
 description: "I've begun building a collection of keys for everything. It's annoying to re-enter all those passphrases more than once. With KeePass, I don't have to."
-tags: 
+tags:
   - KeePass
   - CLI
   - Linux
@@ -23,14 +23,14 @@ Today I was messing around in my gaming environment (which, until I take the tim
 
 - [Background](#background)
 - [Software](#software)
-- [Adding keys](#addingkeys)
-- [Running KeePass as an `ssh-agent`](#runningkeepassasansshagent)
-    - [The basics](#thebasics)
-    - [`systemd`](#systemd)
-    - [Windows](#windows)
-        - [Using `msys`/`cygwin`](#usingmsyscygwin)
-        - [Using `python`](#usingpython)
-- [KeePass Auto-Type](#keepassautotype)
+- [Adding keys](#adding-keys)
+- [Running KeePass as an `ssh-agent`](#running-keepass-as-an-ssh-agent)
+  - [The basics](#the-basics)
+  - [`systemd`](#systemd)
+  - [Windows](#windows)
+    - [Using `msys`/`cygwin`](#using-msyscygwin)
+    - [Using `python`](#using-python)
+- [KeePass Auto-Type](#keepass-auto-type)
 
 <!-- /MarkdownTOC -->
 ## Background
@@ -40,21 +40,24 @@ Typically on Linux, [`ssh-agent`](http://blog.joncairns.com/2013/12/understandin
 On Windows, however, closing all active `bash` shells kills off the processes. Microsoft says [this a feature](https://superuser.com/a/1173513), while the internet [hates it](https://wpdev.uservoice.com/forums/266908-command-prompt-console-bash-on-ubuntu-on-windo). For someone like me running `ssh-add` more than once in my [`.zpreztorc`](https://github.com/sorin-ionescu/prezto/blob/master/runcoms/zpreztorc), it's horrible and I hate it.
 
 This is where KeePass steps in...
-* **as an `ssh-agent`**: [KeeAgent](https://github.com/dlech/KeeAgent) is a fantastic crossplatform tool that functions as an `ssh-agent` capable of reading keys directly from your database.
-* **as a typist**: For situations where you aren't able to [foward the agent](https://developer.github.com/v3/guides/using-ssh-agent-forwarding/) or aren't starting from a configured instance of KeePass, [Auto-Type](http://keepass.info/help/base/autotype.html) has you covered.
+
+- **as an `ssh-agent`**: [KeeAgent](https://github.com/dlech/KeeAgent) is a fantastic crossplatform tool that functions as an `ssh-agent` capable of reading keys directly from your database.
+- **as a typist**: For situations where you aren't able to [foward the agent](https://developer.github.com/v3/guides/using-ssh-agent-forwarding/) or aren't starting from a configured instance of KeePass, [Auto-Type](http://keepass.info/help/base/autotype.html) has you covered.
 
 By always forwarding your agent (e.g. `ssh -A ...`), you can handle all of the keys via KeePass on your machine, instead of managing different keys on each machine.
 
 ## Software
-* KeePass 2 (`~2`)
-    * [Windows](http://keepass.info/download.html)
-    * [Mac OS X](http://keepass.info/download.html) `cmd+f` "Contributed/Unofficial KeePass Packages"
-    * [Some Linux package managers](http://keepass.info/download.html) `ctrl+f` "Contributed/Unofficial KeePass Packages"
-    * [Everything else](http://keepass.info/help/v2/setup.html#mono)
-* [KeeAgent](https://github.com/dlech/KeeAgent)
-* (optional) [KPEntryTemplates](https://github.com/mitchcapper/KPEntryTemplates/releases) (makes it easier to manage templates)
+
+- KeePass 2 (`~2`)
+  - [Windows](http://keepass.info/download.html)
+  - [Mac OS X](http://keepass.info/download.html) `cmd+f` "Contributed/Unofficial KeePass Packages"
+  - [Some Linux package managers](http://keepass.info/download.html) `ctrl+f` "Contributed/Unofficial KeePass Packages"
+  - [Everything else](http://keepass.info/help/v2/setup.html#mono)
+- [KeeAgent](https://github.com/dlech/KeeAgent)
+- (optional) [KPEntryTemplates](https://github.com/mitchcapper/KPEntryTemplates/releases) (makes it easier to manage templates)
 
 ## Adding keys
+
 The [official docs for KeeAgent](https://lechnology.com/software/keeagent/usage/quick-start/) are awesome and have way more screenshots than I want to take. Basically, make your key like normal, use KeePass to generate the passphrase, and attach both the private and public files.
 
 If, like me, you plan on building as many keys as you have passwords, you should uncheck the "Add key to agent when database is opened/unlocked" and instead manage it through KeeAgent.
@@ -62,31 +65,40 @@ If, like me, you plan on building as many keys as you have passwords, you should
 The agent works by [forwarding as many keys as possible](https://serverfault.com/a/820048), so you can lock yourself out of a server if you load too many keys at once.
 
 ## Running KeePass as an `ssh-agent`
+
 ### The basics
+
 Set up KeeAgent as the Agent and export a socket:
 ![keepass-linux-agent](/images/2017/09/keepass-linux-agent.png)
 I use `ssh-keeagent.sock` instead of `ssh-agent.sock` to keep origin explicit.
 
 You'll need to add the socket to your `.{whatever}rc` file:
-<pre class="line-numbers"><code class="language-bash">
+
+```bash
 export SSH_AUTH_SOCK=/tmp/user/ssh-keeagent.sock
-</code></pre>
-Finally, [add keys](#addingkeys) and test the connection with some server:
-<pre class="line-numbers"><code class="language-bash">
+```
+
+Finally, [add keys](#adding-keys) and test the connection with some server:
+
+```bash
 ssh -T git@github.com
-</code></pre>
+```
+
 ### `systemd`
+
 (Note: I'm lazy and prefer to just run KeeAgent as the `ssh-agent`, so I didn't test this)
 
 [This article](https://www.schmengler-se.de/en/2017/03/set-up-keepass-with-keeagent-on-linux/) by [Fabian Schmengler](https://www.schmengler-se.de/en/author/fabian-schmengler/) provides an excellent `systemd` setup. I'm pulling out the steps just in case:
 
 Add `SSH_AGENT_SOCK` to your `.{whatever}rc` file ([source](https://www.schmengler-se.de/en/2017/03/set-up-keepass-with-keeagent-on-linux/#highlighter_499877)):
-<pre class="line-numbers"><code class="language-bash">
+
+```bash
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-</code></pre>
+```
 
 Add a user service, `~/.config/systemd/user/ssh-agent.service` ([source](https://www.schmengler-se.de/en/2017/03/set-up-keepass-with-keeagent-on-linux/#highlighter_868016)):
-<pre class="line-numbers"><code class="language-bash">
+
+```bash
 [Unit]
 Description=SSH key agent
 Wants=environment.target
@@ -104,29 +116,40 @@ ExecStopPost=/bin/rm ${SSH_AUTH_SOCK}
 
 [Install]
 WantedBy=default.target
-</code></pre>
+```
+
 This step is really smart. Like the author, I've had trouble with `SSH_AGENT_PID` in the past. The service throws the generated config into a local file, removing the headache of exporting the variables.
 
 Start and enable the service ([source](https://www.schmengler-se.de/en/2017/03/set-up-keepass-with-keeagent-on-linux/#highlighter_300270)):
-<pre class="line-numbers"><code class="language-bash">
+
+```bash
 systemctl --user enable ~/.config/systemd/user/ssh-agent.service
 systemctl --user start ssh-agent
-</code></pre>
+```
 
 Guard `keepass` with `~/ssh-agent.properties` ([source](https://www.schmengler-se.de/en/2017/03/set-up-keepass-with-keeagent-on-linux/#highlighter_9794)):
-<pre class="line-numbers"><code class="language-bash">
+
+```bash
 source ~/ssh-agent.properties && keepass
-</code></pre>
+```
+
 You'll have to change the command wherever it's being called (e.g. update the path in your menu editor)
+
 ### Windows
+
 [mendhak](https://github.com/mendhak) wrote a wonderful article about [connecting KeeAgent to Cygwin/MsysGit](http://code.mendhak.com/keepass-and-keeagent-setup/). However, with Windows 10, I'd like to integrate with WSL. At the moment, full integration [doesn't exist](https://github.com/dlech/KeeAgent/issues/159), but there are several solutions to get around it.
+
 #### Using `msys`/`cygwin`
+
 You can read from a [`msysgit`](https://github.com/msysgit/msysgit) (or possibly [`cygwin`](https://www.cygwin.com/)) socket via [`socat`](http://www.dest-unreach.org/socat/doc/socat.html). Find or install `socat`,
-<pre class="line-numbers"><code class="language-bash">
+
+```bash
 which socat || sudo apt-get -y install socat
-</code></pre>
+```
+
 then update your `.{whatever}rc` file ([source](https://github.com/dlech/KeeAgent/issues/159#issue-165437587)):
-<pre class="line-numbers"><code class="language-bash">
+
+```bash
  # If MSYSGIT socket in keeagent is set as c:\Users/foo/Documents/ssh_auth_msysgit
 SSH_AUTH_KEEAGENT_SOCK=/mnt/c/Users/foo/Documents/ssh_auth_msysgit
 SSH_AUTH_KEEAGENT_PORT=`sed -r 's/!<socket >([0-9]*\b).*/\1/' ${SSH_AUTH_KEEAGENT_SOCK}`
@@ -136,9 +159,11 @@ ssh_auth_tmpdir=`mktemp --tmpdir --directory keeagent-ssh.XXXXXXXXXX`
 SSH_AUTH_SOCK="${ssh_auth_tmpdir}/agent.$$"
 
 socat UNIX-LISTEN:${SSH_AUTH_SOCK},mode=0600,fork,shut-down TCP:127.0.0.1:${SSH_AUTH_KEEAGENT_PORT},connect-timeout=2 2>&1 > /dev/null &
-</code></pre>
+```
+
 I had to modify this a bit to get it to work with my `prezto` setup. Placing it in my `.zshrc` meant it was running in every new `bash.exe`, so I `ps | awk` to find the proper `SSH_AUTH_SOCK` if it's already running.
-<pre class="line-numbers"><code class="language-bash">
+
+```bash
  # Attempt to find the current process
 SSH_AUTH_SOCK=$(ps -C socat -o command | awk '{ match($2, /\/tmp.*keeagent[^,]*/, a) }END{ print a[0] }')
  # Check if variable is empty
@@ -156,17 +181,23 @@ if [[ -z $SSH_AUTH_SOCK ]]; then
     socat UNIX-LISTEN:${SSH_AUTH_SOCK},mode=0600,fork,shut-down TCP:127.0.0.1:${SSH_AUTH_KEEAGENT_PORT},connect-timeout=2 2>&1 > /dev/null &
 fi
 export SSH_AUTH_SOCK=$SSH_AUTH_SOCK
-</code></pre>
+```
+
 Breakdown of the initial command:
-* `ps -C socat -o command`
-    - `-C socat` searches the `COMMAND` column for `socat`
-    - `-o command` returns only the `COMMAND` column
-* `awk '{ match($2, /\/tmp.*keeagent[^,]*/, a) }END{ print a[0] }'`:
-    - `match($2, /\/tmp.*keeagent[^,]*/, a)` searches the second column (see the space between `socat` and `UNIX`?) for a `/tmp` path containing `keeagent` and stores it in `a`.
-    - `print a[0]` sends off the matched string, if any.
+
+- `ps -C socat -o command`
+  - `-C socat` searches the `COMMAND` column for `socat`
+  - `-o command` returns only the `COMMAND` column
+- `awk '{ match($2, /\/tmp.*keeagent[^,]*/, a) }END{ print a[0] }'`:
+  - `match($2, /\/tmp.*keeagent[^,]*/, a)` searches the second column (see the space between `socat` and `UNIX`?) for a `/tmp` path containing `keeagent` and stores it in `a`.
+  - `print a[0]` sends off the matched string, if any.
+
 #### Using `python`
+
 With [`python`](http://timmyreilly.azurewebsites.net/python-with-ubuntu-on-windows/) you can directly convert the socket ([gist](https://gist.github.com/FlorinAsavoaie/8c2b6cb00f786c2caab65b1a51f4e847) | [fork with additional features](https://gist.github.com/kevinvalk/3ccd5b360fd568862b4a397a9df9ed26)) instead of using `socat`. I haven't tried this, but it seems pretty solid. I might eventually run it in a VM at work.
+
 ## KeePass Auto-Type
+
 If you, for whatever reason, [aren't forwarding/can't forward your agent](https://developer.github.com/v3/guides/using-ssh-agent-forwarding/), KeePass is still insanely useful. I use for server-specific users whose config I don't want to leave the server (if it doesn't leave the server, I know it's insecure when I see it in the wild). I make a template per user and reference things everywhere. Here's a breakdown of a sample user:
 
 ![keepass-add-entry](/images/2017/09/keepass-add-entry.png)
@@ -178,10 +209,9 @@ I'm abusing `URL` as `hostname`, and the password is actually the key's passphra
 I include a string field for each of the CLI options (sure, specifying options and a config file is overkill, but you get the point).
 
 ![keepass-add-auto-type](/images/2017/09/keepass-add-auto-type.png)
-```
+
+```text
 ssh -i {S:SSH Key Path} -F {S:SSH Config File} -p {S:SSH Port} {USERNAME}@{URL}{ENTER}{DELAY 1000}{PASSWORD}{ENTER}
 ```
+
 This is where the magic happens. I've beefed up the autotype to include all of the variables. I could actually use `URL:Port` instead of a custom variable, but I like having a custom variable because I can create a default template with port 22 and not worry about always appending `:22` to the `URL`.
-
-
-
