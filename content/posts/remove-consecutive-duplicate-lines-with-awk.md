@@ -60,9 +60,9 @@ I figured there had to be an easy solution using `awk`, so I grabbed the first S
 
 This one's particularly opaque. Before using it, lets see how it works.
 
-* `seen[$0]` creates an entry in [the `seen` associative array](http://kirste.userpage.fu-berlin.de/chemnet/use/info/gawk/gawk_12.html) whose key is the current line, `$0`. `seen` isn't a magic array; it's just easy convention. `qqq[$0]` achieves the same results.
-* `x++` [post-increments the value](http://www.delorie.com/gnu/docs/gawk/gawk_87.html#IDX621). That means the value will stay the same for this operation, but increases immediately afterward.
-* `!x` negates the following statement, which, in this case, will stop `awk` from doing anything.
+- `seen[$0]` creates an entry in [the `seen` associative array](http://kirste.userpage.fu-berlin.de/chemnet/use/info/gawk/gawk_12.html) whose key is the current line, `$0`. `seen` isn't a magic array; it's just easy convention. `qqq[$0]` achieves the same results.
+- `x++` [post-increments the value](http://www.delorie.com/gnu/docs/gawk/gawk_87.html#IDX621). That means the value will stay the same for this operation, but increases immediately afterward.
+- `!x` negates the following statement, which, in this case, will stop `awk` from doing anything.
 
 Normally `awk` prints every line. In this script, the first time `awk` sees a line, `seen[$0]` will be empty, so the post-increment will coerce it to a number after the operation completes. However, at the moment, it's empty, and the post-increment waits for any preceding operations, so the empty value is negated and then coerced to a number.
 
@@ -153,11 +153,11 @@ As it turns out, I need a few lines to appear more than once, so common `awk` so
 <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> awk <span class="s1" style="color:#e6db74">'BEGIN{ old = "" } { new = $0 } old == new &amp;&amp; old != "" { next } { old = $0; print }'</span> README.md &gt; tmp3.md<br></pre></div>
 </td></tr></table>
 
-* `BEGIN{ old = "" }` seeds `old` at file load, rather than at each line
-* `{ new = $0 }` is run each line, updating the value of `new`
-* `old == new && old != ""` will be true only if the lines are equal and nonempty
-* `{ next }` is fired if the conditional is true, skipping immediately to the next record (i.e. not printing the second, duplicated line)
-* `{ old = $0; print }` will update the value of `old` and pass the line on to `stdout`
+- `BEGIN{ old = "" }` seeds `old` at file load, rather than at each line
+- `{ new = $0 }` is run each line, updating the value of `new`
+- `old == new && old != ""` will be true only if the lines are equal and nonempty
+- `{ next }` is fired if the conditional is true, skipping immediately to the next record (i.e. not printing the second, duplicated line)
+- `{ old = $0; print }` will update the value of `old` and pass the line on to `stdout`
 
 <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%">
 <tr class="code-header" style="height:40px; padding:5px 0 0" height="40">
