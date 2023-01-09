@@ -5,7 +5,7 @@ date: "2018-03-07T01:00:00.000Z"
 feature_image: "/images/2018/03/header-6.png"
 author: "CJ Harries"
 description: "This post takes a cursory look at reflection with TypeScript. Its primary focus is how reflection can be used with TypeScript decorators."
-tags: 
+tags:
   - TypeScript
   - JavaScript
   - Node
@@ -20,13 +20,13 @@ This post takes a cursory look at reflection with TypeScript. Its primary focus 
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
 - [Overview](#overview)
   - [`Reflect`](#reflect)
   - [`emitDecoratorMetadata`](#emitdecoratormetadata)
-  - [`reflect-metadata`](#reflectmetadata)
-- [Example: Validate a Parameter Range](#examplevalidateaparameterrange)
+  - [`reflect-metadata`](#reflect-metadata)
+- [Example: Validate a Parameter Range](#example-validate-a-parameter-range)
 - [Recap](#recap)
 - [Legal](#legal)
 

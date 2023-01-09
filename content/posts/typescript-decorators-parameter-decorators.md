@@ -5,7 +5,7 @@ date: "2018-03-10T23:00:00.000Z"
 feature_image: "/images/2018/03/header-7.png"
 author: "CJ Harries"
 description: "This post takes an in-depth look at parameter decorators. It examines their signature and provides a couple of useful examples."
-tags: 
+tags:
   - TypeScript
   - JavaScript
   - Node
@@ -21,17 +21,17 @@ This post takes an in-depth look at parameter decorators. It examines their sign
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
 - [Overview](#overview)
-  - [Class Method vs Global Function](#classmethodvsglobalfunction)
+  - [Class Method vs Global Function](#class-method-vs-global-function)
 - [Signature](#signature)
-  - [`target: any`](#targetany)
-  - [`propertyKey: string | symbol`](#propertykeystringsymbol)
-  - [`parameterIndex: number`](#parameterindexnumber)
+  - [`target: any`](#target-any)
+  - [`propertyKey: string | symbol`](#propertykey-string--symbol)
+  - [`parameterIndex: number`](#parameterindex-number)
 - [Usage](#usage)
   - [`required`](#required)
-  - [Arbitrary Metadata](#arbitrarymetadata)
+  - [Arbitrary Metadata](#arbitrary-metadata)
 - [Recap](#recap)
 - [Legal](#legal)
 

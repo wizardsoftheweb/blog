@@ -5,7 +5,7 @@ date: "2018-03-11T01:00:00.000Z"
 feature_image: "/images/2018/03/header-8.png"
 author: "CJ Harries"
 description: "This post takes an in-depth look at property decorators. It examines their signature, provides sample usage, and exposes a common antipattern."
-tags: 
+tags:
   - TypeScript
   - JavaScript
   - Node
@@ -22,12 +22,12 @@ This post takes an in-depth look at property decorators. It examines their signa
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
 - [Overview](#overview)
 - [Signature](#signature)
-  - [`target: any`](#targetany)
-  - [`propertyKey: string | symbol`](#propertykeystringsymbol)
+  - [`target: any`](#target-any)
+  - [`propertyKey: string | symbol`](#propertykey-string--symbol)
 - [Usage](#usage)
 - [Antipattern](#antipattern)
   - [Example](#example)

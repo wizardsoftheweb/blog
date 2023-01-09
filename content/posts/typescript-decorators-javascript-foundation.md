@@ -5,7 +5,7 @@ date: "2018-03-06T01:00:00.000Z"
 feature_image: "/images/2018/03/header-5.png"
 author: "CJ Harries"
 description: "This post looks at how TypeScript compiles decorators, breaks down the raw JavaScript from the compiler, and analyzes the JavaScript output from several examples."
-tags: 
+tags:
   - TypeScript
   - JavaScript
   - Node
@@ -20,18 +20,18 @@ This post looks at how TypeScript compiles decorators. It pulls the raw JavaScri
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
-- [Why Look at the JavaScript?](#whylookatthejavascript)
+- [Why Look at the JavaScript?](#why-look-at-the-javascript)
 - [Configuration](#configuration)
-- [From the Source](#fromthesource)
+- [From the Source](#from-the-source)
   - [Raw](#raw)
-  - [Prettified and Polished](#prettifiedandpolished)
+  - [Prettified and Polished](#prettified-and-polished)
 - [Analysis](#analysis)
-  - [Parameter Decorators](#parameterdecorators)
-  - [Property Decorators](#propertydecorators)
-  - [Method Decorators](#methoddecorators)
-  - [Class Decorators](#classdecorators)
+  - [Parameter Decorators](#parameter-decorators)
+  - [Property Decorators](#property-decorators)
+  - [Method Decorators](#method-decorators)
+  - [Class Decorators](#class-decorators)
 - [Recap](#recap)
 - [Legal](#legal)
 

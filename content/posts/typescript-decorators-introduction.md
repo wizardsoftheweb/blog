@@ -5,7 +5,7 @@ date: "2018-03-04T19:00:00.000Z"
 feature_image: "/images/2018/03/header-4.png"
 author: "CJ Harries"
 description: "This is an introduction to TypeScript decorators. It looks at the basics, factories, and composition. You should have some familiarity with TypeScript and OOP."
-tags: 
+tags:
   - TypeScript
   - JavaScript
   - Node
@@ -20,12 +20,12 @@ This post serves as introduction to TypeScript decorators. It looks at basic dec
 
 <p class="nav-p"><a id="post-nav"></a></p>
 
-- [The Series so Far](#theseriessofar)
+- [The Series so Far](#the-series-so-far)
 - [Code](#code)
 - [Decorators](#decorators)
 - [Configuration](#configuration)
-- [Simple Example](#simpleexample)
-- [Decorator Factories](#decoratorfactories)
+- [Simple Example](#simple-example)
+- [Decorator Factories](#decorator-factories)
 - [Composition](#composition)
 - [Recap](#recap)
 - [Legal](#legal)
