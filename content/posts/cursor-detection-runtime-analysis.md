@@ -6,7 +6,7 @@ feature_image: "/images/2018/01/violin-xlib-color-1.png"
 author: "CJ Harries"
 description: "This is a follow-up to post comparing cursor snooping methods. I don't have much to add, just more code and some (basic) graphs. Direct Xlib usage is the way to go.
 "
-tags: 
+tags:
   - Automation
   - data analysis
   - Python
@@ -27,15 +27,15 @@ This is a quick follow-up to [an earlier post today](https://blog.wizardsofthewe
 <p class="nav-p"><a id="post-nav"></a></p>
 
 - [Code](#code)
-- [Script Runner](#scriptrunner)
-- [Raw Data](#rawdata)
-- [Munging Setup](#mungingsetup)
-- [`pyautogui-pixel-color.py`](#pyautoguipixelcolorpy)
-- [`xlib-color.py`](#xlibcolorpy)
-- [`xwd-convert-chained.py`](#xwdconvertchainedpy)
-- [`xwd-convert.sh`](#xwdconvertsh)
-- [All Together](#alltogether)
-- [Slow Only](#slowonly)
+- [Script Runner](#script-runner)
+- [Raw Data](#raw-data)
+- [Munging Setup](#munging-setup)
+- [`pyautogui-pixel-color.py`](#pyautogui-pixel-colorpy)
+- [`xlib-color.py`](#xlib-colorpy)
+- [`xwd-convert-chained.py`](#xwd-convert-chainedpy)
+- [`xwd-convert.sh`](#xwd-convertsh)
+- [All Together](#all-together)
+- [Slow Only](#slow-only)
 - [Conclusions](#conclusions)
 
 ## Code
@@ -46,9 +46,9 @@ You can find everything here [in the repo](https://github.com/wizardsoftheweb/li
 
 To get some data, I had to revamp most of the scripts from the first post. I made sure all of them exported these things:
 
-* RGB triplet: `pyautogui` seems [to limit its output](https://pyautogui.readthedocs.io/en/latest/screenshot.html#pixel-matching), so I reduced everything down to `[0,255]`
-* Mouse position: I wanted to use this for color comparisons, which hasn't happened yet
-* Action run time: This previously included setup and pixel hunting; it now also includes RGB and mouse parsing
+- RGB triplet: `pyautogui` seems [to limit its output](https://pyautogui.readthedocs.io/en/latest/screenshot.html#pixel-matching), so I reduced everything down to `[0,255]`
+- Mouse position: I wanted to use this for color comparisons, which hasn't happened yet
+- Action run time: This previously included setup and pixel hunting; it now also includes RGB and mouse parsing
 
 After a fair amount of trial-and-error (X11 apparently gets cranky at some of the abrupt switches I was attempting), I finally settled on [this approach](https://github.com/wizardsoftheweb/linux-automation-cursor-detection/blob/master/utilities/script-runner.py) using promises and subprocesses.
 
@@ -120,6 +120,6 @@ This is one is a bit better. Unfortunately, it does a good job of highlighting h
 
 ## Conclusions
 
-* `python-xlib` is scary fast. That's so awesome.
-* `pyautogui` is slower than I thought. It does seem to maintain a fairly stable slow, pace, though, in comparison to the others.
-* Chaining commands via Python is actually, on average, faster than running things through `bash`. I don't know if that's because of the additional `awk` processing on the tail end of `xwd-convert.sh` or something else. It bears some investigation.
+- `python-xlib` is scary fast. That's so awesome.
+- `pyautogui` is slower than I thought. It does seem to maintain a fairly stable slow, pace, though, in comparison to the others.
+- Chaining commands via Python is actually, on average, faster than running things through `bash`. I don't know if that's because of the additional `awk` processing on the tail end of `xwd-convert.sh` or something else. It bears some investigation.
