@@ -5,7 +5,7 @@ date: "2018-01-14T20:00:00.000Z"
 feature_image: "/images/2018/01/--Code-@wizardsoftheweb-wotw-macro-scratch.parser.py--wotw-macro----Sublime-Text_002.png"
 author: "CJ Harries"
 description: "I miss AutoHotkey. I spent this weekend in Google and Stack Overflow porting a couple of very basic features for the X world."
-tags: 
+tags:
   - Automation
   - Python
   - Xlib
@@ -18,6 +18,7 @@ tags:
   - bash
 draft: true
 ---
+<!-- markdownlint-disable MD052 -->
 
 I've been absolutely thrilled moving my home dev world back to Fedora. I'm not fighting OS ads, virtualization just works, and my settings actually stay the same after updates. I am, however, missing [AutoHotkey](https://autohotkey.com/). It's been an integral part of my computing world since undergrad. I've spent the better part of three years looking for a POSIX AHK clone with no luck.
 
@@ -27,11 +28,11 @@ I've tossed around the idea of starting something similar for some time now. Obv
 
 - [Background](#background)
 - [Software](#software)
-- [My First Cursor Position](#myfirstcursorposition)
+- [My First Cursor Position](#my-first-cursor-position)
 - [`pyautogui`](#pyautogui)
 - [Frankenstein](#frankenstein)
   - [`bash`](#bash)
-  - [Disconnected and Secure](#disconnectedandsecure)
+  - [Disconnected and Secure](#disconnected-and-secure)
   - [Chained](#chained)
   - [Shelled](#shelled)
 - [Xlib](#xlib)
@@ -45,46 +46,39 @@ However, Electron is a Chromium wrapper. It's got a ton of bloat and the whole C
 
 I'd like to build something simple this weekend to figure out a few new components. I don't have any set goals, but these things are in the back of my head:
 
-* Lightweight: When Electron is your baseline everything's an improvement
-* Cross-platform: If nothing else, the RHEL and Debian ecosystems
-* Fast: I feel like 10+ ops a second isn't asking too much
+- Lightweight: When Electron is your baseline everything's an improvement
+- Cross-platform: If nothing else, the RHEL and Debian ecosystems
+- Fast: I feel like 10+ ops a second isn't asking too much
 
 ## Software
 
 I mention some software during this post. I install everything here, but I remove some of it later. YMMV. If you're in the Debian ecosystem, this should work but the packages will probably have completely different names.
 
-* [`xdotool` and its dependencies](http://www.semicomplete.com/projects/xdotool/)
-    
+- [`xdotool` and its dependencies](http://www.semicomplete.com/projects/xdotool/)
 
     <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
     <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> sudo dnf install xdotool<br></pre></div>
     </td></tr></table>
 
-* [ImageMagick](https://www.imagemagick.org/script/download.php)
-    
+- [ImageMagick](https://www.imagemagick.org/script/download.php)
 
     <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
     <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> sudo dnf install ImageMagick<br></pre></div>
     </td></tr></table>
 
-* `xwd`: You might have to hunt for this executable's provider.
-    
+- `xwd`: You might have to hunt for this executable's provider.
 
     <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
     <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> dnf provides xwd<br><span class="go" style="color:#888">Last metadata expiration check: 0:10:01 ago on Sun 14 Jan 2018 06:28:40 AM UTC.</span><br><span class="go" style="color:#888">xorg-x11-apps-7.7-18.fc27.x86_64 : X.Org X11 applications</span><br><span class="go" style="color:#888">Repo        : fedora</span><br><span class="go" style="color:#888">Matched from:</span><br><span class="go" style="color:#888">Provide    : xwd = 1.0.6</span><br><span class="gp" style="color:#66d9ef">$</span> sudo dnf install xorg-x11-apps<br></pre></div>
     </td></tr></table>
 
-* Depending on your Python setup, you might already have these external dependencies.
-
-    
+- Depending on your Python setup, you might already have these external dependencies.
 
     <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
     <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> sudo dnf install <span class="se" style="color:#ae81ff">\</span><br>        python<span class="o" style="color:#f92672">{</span><span class="m" style="color:#ae81ff">2</span>,3<span class="o" style="color:#f92672">}</span>-<span class="o" style="color:#f92672">{</span>tkinter,xlib<span class="o" style="color:#f92672">}</span> <span class="se" style="color:#ae81ff">\</span><br>        scrot<br></pre></div>
     </td></tr></table>
 
-* Finally, for good measure, check the `pip` dependencies:
-
-    
+- Finally, for good measure, check the `pip` dependencies:
 
     <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
     <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> pip install --user <span class="se" style="color:#ae81ff">\</span><br>        pyautogui <span class="se" style="color:#ae81ff">\</span><br>        Xlib<br></pre></div>
@@ -248,6 +242,7 @@ I have to admit, I was kinda stumped at this point. `pyautogui` is well-written 
 Luckily I stumbled into `xwd` via [a wonderfully succinct `bash` solution](https://stackoverflow.com/a/25498342/2877698). It's the [`X` `W`indow `D`umping utility](http://www.xfree86.org/current/xwd.1.html). That's insanely useful here, since X is what runs the system. `xwd`, in theory, has all of the screen information I could want. The linked solution uses ImageMagick [to convert the dump](https://github.com/ImageMagick/ImageMagick/blob/master/coders/xwd.c); not only did I not know it was possible to get an X dump, I also did not know ImageMagick would parse it beautifully (I would have guessed that part eventually).
 
 ### `bash`
+
 <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%">
 <tr class="code-header" style="height:40px; padding:5px 0 0" height="40">
 <td style="border:none; background-image:none; background-position:center; background-repeat:no-repeat"></td>
@@ -550,9 +545,9 @@ So far, it looks like this script can consistently poll cursor colors in fewer t
 
 I'm sort of waving my hands at a few things here because I still don't fully understand them yet.
 
-* I do not understand the bitmap side of things, [i.e. `XYPixmap`s](https://stackoverflow.com/a/32244336/2877698). I don't feel all that good about [`ZPixmap`s either](https://lists.freedesktop.org/archives/xorg/2017-August/058896.html) but they're at least composed of RGB triplets which is something I do get.
-* Speaking of `ZPixmap`s, I had quite a bit of trouble with `plane_mask`s as well. They're used [to hide unwanted bit planes](https://tronche.com/gui/x/xlib/GC/manipulating.html), which I just realized writing this sentence isn't anything more special than masking bits. That being said, it's not documented well in X11 and at all in `python-xlib`.
-* The pixels in `ZPixmap`s return strange data structures. This is 100% my inexperience with Python and its advanced data types. I will eventually break down the code and figure out what it's doing.
+- I do not understand the bitmap side of things, [i.e. `XYPixmap`s](https://stackoverflow.com/a/32244336/2877698). I don't feel all that good about [`ZPixmap`s either](https://lists.freedesktop.org/archives/xorg/2017-August/058896.html) but they're at least composed of RGB triplets which is something I do get.
+- Speaking of `ZPixmap`s, I had quite a bit of trouble with `plane_mask`s as well. They're used [to hide unwanted bit planes](https://tronche.com/gui/x/xlib/GC/manipulating.html), which I just realized writing this sentence isn't anything more special than masking bits. That being said, it's not documented well in X11 and at all in `python-xlib`.
+- The pixels in `ZPixmap`s return strange data structures. This is 100% my inexperience with Python and its advanced data types. I will eventually break down the code and figure out what it's doing.
 
 Also, `python-xlib` is really awesome. I've made some comments that could be taken as passive aggressive stabs at the devs, and I want to make sure that misconception is cleared up. They've built some amazing software, they're working hard to make the world a better place, and I'm stoked about their contributions.
 
