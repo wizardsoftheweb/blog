@@ -5,7 +5,7 @@ date: "2018-01-07T01:00:00.000Z"
 feature_image: "/images/2018/01/urxvt.png"
 author: "CJ Harries"
 description: "This post breaks down building rxvt-unicode from source. It's targeted to Fedora 27 but might be useful elsewhere."
-tags: 
+tags:
   - CLI
   - Fedora
   - powerline
@@ -41,8 +41,8 @@ I tried almost all of the fonts without finding a complete set. The Fedora offic
 
 `rxvt-unicode` itself seems to come from [this master](https://github.com/exg/rxvt-unicode). You could start from there, but a couple of things are immediately blocking:
 
-* [`libev` is a missing dependency](https://github.com/enki/libev)
-* [`libptytty` is a missing dependency](https://github.com/yusiwen/libptytty)
+- [`libev` is a missing dependency](https://github.com/enki/libev)
+- [`libptytty` is a missing dependency](https://github.com/yusiwen/libptytty)
 
 <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
 <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> git clone https://github.com/exg/rxvt-unicode<br><span class="gp" style="color:#66d9ef">$</span> <span class="nb" style="color:#f8f8f2">cd</span> rxvt-unicode<br><span class="gp" style="color:#66d9ef">$</span> git submodule add https://github.com/enki/libev<br><span class="gp" style="color:#66d9ef">$</span> git submodule add https://github.com/yusiwen/libptytty<br></pre></div>
@@ -91,4 +91,3 @@ To make things easier, I've forked the repo with my changes. You can [snag it an
 <table class="highlighttable" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><tr><td class="code" style="border:none; background-image:none; background-position:center; background-repeat:no-repeat; padding:10px 0">
 <div class="highlight" style='border-radius:5px; display:block; font-family:Consolas, "Courier New", monospace; min-width:300px; overflow:auto; width:100%; background:#272822; color:#f8f8f2' width="100%"><pre style="background:#272822; color:#f8f8f2; border:none; font-size:1em; line-height:125%; padding:10px; margin-bottom:0; margin-top:0; padding-bottom:0; padding-top:0"><span></span><span class="gp" style="color:#66d9ef">$</span> <span class="nb" style="color:#f8f8f2">cd</span><br><span class="gp" style="color:#66d9ef">$</span> git clone https://github.com/thecjharries/rxvt-unicode.git --recursive<br><span class="gp" style="color:#66d9ef">$</span> <span class="nb" style="color:#f8f8f2">cd</span> rxvt-unicode<br><span class="gp" style="color:#66d9ef">$</span> ./autogen.sh<br><span class="gp" style="color:#66d9ef">$</span> ./configure --prefix<span class="o" style="color:#f92672">=</span><span class="nv" style="color:#f8f8f2"></span>/usr --enable-everything <span class="o" style="color:#f92672">&amp;&amp;</span> make<br><span class="gp" style="color:#66d9ef">$</span> sudo make install<br></pre></div>
 </td></tr></table>
-
