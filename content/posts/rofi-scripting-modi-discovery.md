@@ -13,7 +13,6 @@ tags:
   - tooling
   - launcher
   - awk
-draft: true
 ---
 <!-- markdownlint-disable MD010 MD037 -->
 

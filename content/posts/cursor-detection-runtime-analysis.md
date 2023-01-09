@@ -19,7 +19,6 @@ tags:
   - xdotool
   - bash
   - RStudio
-draft: true
 ---
 
 This is a quick follow-up to [an earlier post today](https://blog.wizardsoftheweb.pro/quickly-detect-cursor-position-and-color/). I don't have much to add, just more code and some (basic) graphs. Direct Xlib usage is seriously the way to go.

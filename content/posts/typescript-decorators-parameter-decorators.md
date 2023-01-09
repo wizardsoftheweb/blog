@@ -14,7 +14,6 @@ tags:
   - parameter
   - signature
   - compiler
-draft: true
 ---
 
 This post takes an in-depth look at parameter decorators. It examines their signature and provides a couple of useful examples. Reading the previous posts in the series is encouraged but not necessary.

@@ -12,7 +12,6 @@ tags:
   - TypeScript
   - JavaScript
   - package
-draft: true
 ---
 
 A majority of my work, both business and pleasure, is done in Node. I support a fairly large codebase which always needs maintenance. As I get new ideas or learn new techniques, the codebase grows. No matter how organized I try to be, every project seems to spawn half a dozen new projects. New projects means new config and packages and builds and instead of doing things the right way, I've just been shuffling a few master files around.

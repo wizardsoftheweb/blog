@@ -13,7 +13,6 @@ tags:
   - patterns
   - OOP
   - compiler
-draft: true
 ---
 
 This post looks at how TypeScript compiles decorators. It pulls the raw JavaScript from the compiler and breaks down the result. It has basic decorator examples of each type to examine the JavaScript output.

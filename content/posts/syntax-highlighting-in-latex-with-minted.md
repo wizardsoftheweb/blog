@@ -13,7 +13,6 @@ tags:
   - CLI
   - markup
   - syntax highlighting
-draft: true
 ---
 <!-- markdownlint-disable MD037 -->
 

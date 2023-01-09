@@ -12,7 +12,6 @@ tags:
   - asciicast
   - Digital Ocean
   - VPS
-draft: true
 ---
 
 I've worked pretty hard to stay out the whole JS package manager debate. NPM's always done what I needed. Prior to yesterday evening, I had no baseline for comparison. Sure, like everyone else, I've read articles that point out how slow NPM is in comparison to Yarn. I tend to switch tabs/windows/whatever the second I forget what I was doing (i.e. every five minutes), so I don't often wait on NPM. Yarn's API also apparently comes from a totally different methodology. I've grown used to the madness surrounding NPM's method, so I've honestly had no reason to change.

@@ -13,7 +13,6 @@ tags:
   - tooling
   - ssh-agent
   - security
-draft: true
 ---
 
 I'll be the first to admit my security has room for improvement. Until last year, I was reusing passwords intermixed with a terribly simple mnemonic. Until a few months ago, my phone and computer were totally unencrypted. I've been fighting the change because it's scary. I'm also very lazy and have been dreading the extra work involved with good security. I've put off updating SSH credentials for about two years now for that exact reason.

@@ -12,7 +12,6 @@ tags:
   - adb
   - DevTools
   - Windows
-draft: true
 ---
 
 I've had trouble with this before, apparently, so this time I'm documenting the process. [The official Google docs](https://developers.google.com/web/tools/chrome-devtools/remote-debugging/) leave out a couple of setup steps, which is seriously frustrating.

@@ -11,7 +11,6 @@ tags:
   - Linux
   - dnf
   - Python
-draft: true
 ---
 
 I've stayed away from [wxPython](https://wxpython.org/) in the past because updates were slow and Python 3 wasn't supported. Within the last couple of weeks, `4.0` was completed, which at least answers the Python 3 problem. I've been pounding my head against X11 idiosyncracies all weekend, so I thought I'd take a break and try it out.

@@ -8,7 +8,6 @@ tags:
   - PowerShell
   - CLI
   - Windows
-draft: true
 ---
 
 This has been sitting in my drafts for some time. Based on some of my experiences this week and some of the stuff we're trying to do at work, I'll probably have more PowerShell soon. Unfortunately.

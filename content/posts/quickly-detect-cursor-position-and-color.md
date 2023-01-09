@@ -16,7 +16,6 @@ tags:
   - cursor
   - xdotool
   - bash
-draft: true
 ---
 <!-- markdownlint-disable MD052 -->
 
