@@ -5,7 +5,7 @@ date: "2017-11-26T22:00:00.000Z"
 feature_image: "/images/2017/11/systemd-xenial.png"
 author: "CJ Harries"
 description: "I ran into some issues this morning setting up a Xenial box via Vagrant. On boot, /var/lib/dpkg was totally locked."
-tags: 
+tags:
   - Vagrant
   - CLI
   - Linux
@@ -18,16 +18,16 @@ draft: true
 
 I ran into some issues this morning setting up a Xenial box via Vagrant. On boot, `/var/lib/dpkg` was totally locked with nothing I knew to link it to in `ps aux`. I've created a fairly novel solution; my point today was to learn about something new.
 
-You should have a basic familiarity with the Linux CLI. If you don't know what `systemd` is, that's not a big deal. Skip to my take on [a full solution](#fullscript) if you'd like, but make sure to read [the disclaimer](#disclaimer) first.
+You should have a basic familiarity with the Linux CLI. If you don't know what `systemd` is, that's not a big deal. Skip to my take on [a full solution](#full-script) if you'd like, but make sure to read [the disclaimer](#disclaimer) first.
 
 <!-- MarkdownTOC -->
 
 - [Windows](#windows)
-- [`/var/lib/dpkg/` Locked](#varlibdpkglocked)
-- [`apt-daily.service` and `apt-daily.timer`](#apt-dailyserviceandapt-dailytimer)
-- [Broken Down](#brokendown)
+- [`/var/lib/dpkg/` Locked](#varlibdpkg-locked)
+- [`apt-daily.service` and `apt-daily.timer`](#apt-dailyservice-and-apt-dailytimer)
+- [Broken Down](#broken-down)
 - [Disclaimer](#disclaimer)
-- [Full Script](#fullscript)
+- [Full Script](#full-script)
 
 <!-- /MarkdownTOC -->
 
@@ -190,30 +190,29 @@ apt-daily.timer   masked
 1. `systemctl` drops all units into `stdout`
 2. `awk` picks up any line containing `apt`.
 
-    * The first prints it as a new line, meaning the final chain gets hit twice. This uses basic `awk` `print`ing. It looks like this:
+    - The first prints it as a new line, meaning the final chain gets hit twice. This uses basic `awk` `print`ing. It looks like this:
 
-    ```
+    ```text
     apt-daily.service
     apt-daily.timer
     ```
 
-    * The second uses `printf` to [skip the `ORS`](https://www.gnu.org/software/gawk/manual/html_node/Output-Separators.html) entirely. It looks like this:
+    - The second uses `printf` to [skip the `ORS`](https://www.gnu.org/software/gawk/manual/html_node/Output-Separators.html) entirely. It looks like this:
 
-    ```
+    ```text
     apt-daily.service apt-daily.timer
     ```
 
 3. Two things are happening here:
-    * First, the command substitution (`"$(this stuff here)"`) is [expanding the braces](`https://www.gnu.org/software/bash/manual/html_node/Brace-Expansion.html`) via `echo` to create this string:
+    - First, the command substitution (`"$(this stuff here)"`) is [expanding the braces](`https://www.gnu.org/software/bash/manual/html_node/Brace-Expansion.html`) via `echo` to create this string:
 
-    ```
+    ```text
     systemctl stop %; systemctl disable %; systemctl mask %; systemctl list-unit-files --all %;
     ```
 
-    * `xargs` then applies `stdin` (via the pipe) to the full `sh` command. It runs verbosely with `-t`, which is why you see a couple of calls. The replace flag (`-I`) specifies a placeholder (`%`) in the command that follows.
+    - `xargs` then applies `stdin` (via the pipe) to the full `sh` command. It runs verbosely with `-t`, which is why you see a couple of calls. The replace flag (`-I`) specifies a placeholder (`%`) in the command that follows.
 
 4. I told you you were going to hate me. I'm not smart enough yet to bum it down even more. #lyfgoals
-
 
 Oh, and you can also wait for `apt-daily` to finish. I suppose you could just manually run all those commands, or even use a `bash` script like this
 
@@ -232,4 +231,5 @@ for unit do
     systemctl list-unit-files "$unit"
 done
 ```
+
 Which is clearly the most boring way to do this task ever.

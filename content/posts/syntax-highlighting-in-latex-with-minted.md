@@ -5,7 +5,7 @@ date: "2018-03-26T12:00:00.000Z"
 feature_image: "/images/2018/03/style-1.png"
 author: "CJ Harries"
 description: "This post serves as an introduction to minted, a pygments-based syntax highlighter for LaTeX. The post covers a few examples, the installation process, and  some basic security."
-tags: 
+tags:
   - minted
   - LaTeX
   - pygments
@@ -15,6 +15,7 @@ tags:
   - syntax highlighting
 draft: true
 ---
+<!-- markdownlint-disable MD037 -->
 
 This post serves as an introduction to `minted`, a `pygments`-based syntax highlighter for LaTeX. Adding `pygments` to LaTeX streamlines so many things. The post provides a few examples of things you can do with `minted`, details the installation process, and covers some basic security.
 
@@ -26,11 +27,11 @@ This post serves as an introduction to `minted`, a `pygments`-based syntax highl
   - [Python](#python)
   - [`pip`](#pip)
   - [`pygments`](#pygments)
-  - [TeX Dependencies](#texdependencies)
+  - [TeX Dependencies](#tex-dependencies)
   - [`minted`](#minted)
-- [`-shell-escape`](#shellescape)
-- [Useful features](#usefulfeatures)
-- [What's Next](#whatsnext)
+- [`-shell-escape`](#-shell-escape)
+- [Useful features](#useful-features)
+- [What's Next](#whats-next)
 
 ## Code
 

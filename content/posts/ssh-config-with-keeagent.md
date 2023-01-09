@@ -5,7 +5,7 @@ date: "2018-02-25T18:30:00.000Z"
 feature_image: "/images/2018/02/all-in-keeagent-1.png"
 author: "CJ Harries"
 description: "Simply put, managing a ton of keys is a serious pain. If you've never really delved into the myriad ways to beef up your settings, this is a good place to start."
-tags: 
+tags:
   - KeePass
   - ssh
   - ssh_config
@@ -27,21 +27,21 @@ I decided to at least pretend like I was doing something about that this morning
 - [Problem](#problem)
 - [Solution](#solution)
 - [Example](#example)
-  - [Generate Keys](#generatekeys)
-  - [Populate KeePass](#populatekeepass)
-  - [Create Environment](#createenvironment)
-  - [Easy Failure](#easyfailure)
-  - [Easier Success](#easiersuccess)
+  - [Generate Keys](#generate-keys)
+  - [Populate KeePass](#populate-keepass)
+  - [Create Environment](#create-environment)
+  - [Easy Failure](#easy-failure)
+  - [Easier Success](#easier-success)
 - [Recap](#recap)
-- [Full Scripts](#fullscripts)
+- [Full Scripts](#full-scripts)
   - [`keygen`](#keygen)
   - [`Vagrantfile`](#vagrantfile)
 
 ## Requirements
 
-* [KeePass 2.X](https://keepass.info/download.html)
-* [KeeAgent](https://keepass.info/plugins.html#keeagent)
-* [`ssh_config`](https://linux.die.net/man/5/ssh_config)
+- [KeePass 2.X](https://keepass.info/download.html)
+- [KeeAgent](https://keepass.info/plugins.html#keeagent)
+- [`ssh_config`](https://linux.die.net/man/5/ssh_config)
 
 If you've never used KeePass or KeeAgent, [start here](https://blog.wizardsoftheweb.pro/keepass-ssh/). I've written about the two together before.
 
@@ -55,9 +55,9 @@ KeePass hasn't been thrilled with `i3` and my theme choices. I apologize for the
 
 Simply put, managing a ton of keys is a serious pain. If, like me, you've never really delved into the myriad ways to beef up your settings, you'll hit a few snags:
 
-* You have to manually add a ton of keys to `ssh-agent`, which means typing passphrases for days when your power goes out, killing the longest continuous uptime you've had in months
-* You have to juggle keys in the agent, as most servers have a fairly low retry count (default is, I believe, six)
-* You have to manually enter the passphrases for anything specified in your config that's not active in your agent, which seems like a waste of time if you're just going to have to juggle anyway
+- You have to manually add a ton of keys to `ssh-agent`, which means typing passphrases for days when your power goes out, killing the longest continuous uptime you've had in months
+- You have to juggle keys in the agent, as most servers have a fairly low retry count (default is, I believe, six)
+- You have to manually enter the passphrases for anything specified in your config that's not active in your agent, which seems like a waste of time if you're just going to have to juggle anyway
 
 ## Solution
 
@@ -115,10 +115,10 @@ All told, this is about seven more active keys than I'm used to having around. I
 
 To make things as simple as possible, I created a `vagrant` box that will act as the remote. I did a few things:
 
-* Created `dummy_user`
-* Assigned `dummy_key_10` (the last in the list) as `dummy_user`'s primary key (also `authorized_key`)
-* Removed password access (forcing a key exchange)
-* Lowered the number of attempts to three
+- Created `dummy_user`
+- Assigned `dummy_key_10` (the last in the list) as `dummy_user`'s primary key (also `authorized_key`)
+- Removed password access (forcing a key exchange)
+- Lowered the number of attempts to three
 
 `vagrant` exposes its own `ssh_config` via `ssh-config`, which we'll use to to access the box and later as a template for our own.
 
