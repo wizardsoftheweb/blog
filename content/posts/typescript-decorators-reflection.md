@@ -13,7 +13,6 @@ tags:
   - patterns
   - OOP
   - compiler
-draft: true
 ---
 
 This post takes a cursory look at reflection with TypeScript. Its primary focus is how reflection can be used with TypeScript decorators.  It introduces `Reflect`, `reflect-metadata`, and some miscellaneous related components.

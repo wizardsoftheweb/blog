@@ -13,7 +13,6 @@ tags:
   - Ubuntu
   - bash
   - systemd
-draft: true
 ---
 
 I ran into some issues this morning setting up a Xenial box via Vagrant. On boot, `/var/lib/dpkg` was totally locked with nothing I knew to link it to in `ps aux`. I've created a fairly novel solution; my point today was to learn about something new.

@@ -10,7 +10,6 @@ tags:
   - raw
   - badges
   - clean-badge-branch-hooks
-draft: true
 ---
 
 After a day of furious coding and way more debugging, I think I finally have a collection of [`git` hooks](https://git-scm.com/docs/githooks) that will properly update badge references. Check out [the repo](https://github.com/wizardsoftheweb/clean-branch-badge-hooks); it's still pretty raw. I've manually tested it with both vanilla and `git-flow` (if you're not using `git-flow`, [use it](https://github.com/nvie/gitflow#getting-started)). I'll actually flesh out the code later; for now, I'm really excited and wanted to share.

@@ -9,7 +9,6 @@ tags:
   - awk
   - terminal
   - scripting
-draft: true
 ---
 
 I ran into an interesting problem yesterday. At some point, while scripting updates to a collection of repos, I managed to duplicate a few lines in several files. I ended up with something like this:

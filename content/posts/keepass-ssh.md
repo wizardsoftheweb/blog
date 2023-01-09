@@ -11,7 +11,6 @@ tags:
   - Linux
   - ssh
   - Windows
-draft: true
 ---
 
 I've been using [KeePass Professional Edition](https://keepass.info) for a few months now, and I'm always discovering new things to do with it. For example, I've got HQ photos of my driver's license so that I can go to the gym without carrying my full wallet (if that's illegal I totally don't do that). I've got a couple of shared databases that sync off my main personal database that I can share with family and friends, which means I change update my accounts without the old hassle of texting everyone the new credentials. I keep all of my work identities in KeePass, both for personal and employer accounts (with different databases, of course).

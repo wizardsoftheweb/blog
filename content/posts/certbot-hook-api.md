@@ -12,7 +12,6 @@ tags:
   - NGINX
   - Apache
   - EFF
-draft: true
 ---
 
 Hopefully this is useful to someone else. I got confused by the language change from `renew` to `deploy` hooks and spent some time ripping the code apart to see how the hooks actually work. I've broken down where the hooks are defined, their configuration, and how you can modify them.

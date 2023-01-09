@@ -14,7 +14,6 @@ tags:
   - build
   - terminal
   - Fedora 27
-draft: true
 ---
 
 I'm a huge fan of [the patched Powerline fonts](https://github.com/powerline/fonts). Those extra icons add a ton of useful information.

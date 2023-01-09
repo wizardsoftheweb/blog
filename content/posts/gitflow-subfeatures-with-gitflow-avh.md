@@ -11,7 +11,6 @@ tags:
   - git
   - repo
   - CLI
-draft: true
 ---
 
 I'm a huge fan of `gitflow`. It's made my life much easier. However, I've noticed recently that, as the codebase grows, features can become disorganized or unwieldy. `gitflow-avh` solves this problem incredibly well by allowing features to be based off any branch.

@@ -9,7 +9,6 @@ tags:
   - AutoHotkey
   - Epom
   - ad
-draft: true
 ---
 
 <p class="nav-p"><a id="post-nav"></a></p>

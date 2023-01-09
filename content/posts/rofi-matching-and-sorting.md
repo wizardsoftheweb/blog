@@ -14,7 +14,6 @@ tags:
   - launcher
   - awk
   - Python
-draft: true
 ---
 <!-- markdownlint-disable MD011 MD037 -->
 

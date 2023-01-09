@@ -15,7 +15,6 @@ tags:
   - properties
   - signature
   - antipattern
-draft: true
 ---
 <!-- markdownlint-disable MD052 -->
 

@@ -13,7 +13,6 @@ tags:
   - Automation
   - security
   - OpenSSH
-draft: true
 ---
 <!-- markdownlint-disable MD037 MD052 -->
 

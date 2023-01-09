@@ -12,7 +12,6 @@ tags:
   - CLI
   - tooling
   - launcher
-draft: true
 ---
 
 This is the first in a series of several posts on how to do way more than you really need to with `rofi`. It's a neat little tool that does so many cool things. I don't have a set number of posts, and I don't have a set goal. I just want to share something I find useful.

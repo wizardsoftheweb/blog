@@ -13,7 +13,6 @@ tags:
   - service
   - numlockx
   - CLI
-draft: true
 ---
 
 I lost my primary drive on Friday, and I'm having to rebuild a bunch of stuff. I didn't document minor things like this before, so I am this time around. Hopefully someone else finds this useful.

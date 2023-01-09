@@ -14,7 +14,6 @@ tags:
   - launcher
   - dmenu
   - awk
-draft: true
 ---
 <!-- markdownlint-disable MD037 -->
 

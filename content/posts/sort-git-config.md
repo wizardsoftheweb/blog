@@ -12,7 +12,6 @@ tags:
   - terminal
   - scripting
   - bash
-draft: true
 ---
 
 As I was updating some `gitflow` config today, I noticed that my `.gitconfig` is a little messy. Like many things, it's grown organically and I've just never thought about tidying it up. It doesn't have to be organized, but neat and tidy files always make things more fun.

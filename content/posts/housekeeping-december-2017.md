@@ -9,7 +9,6 @@ tags:
   - housekeeping
   - plans
   - It's my blog and I'll rant if I want to
-draft: true
 ---
 
 - [Sensible SSH with Ansible](https://blog.wizardsoftheweb.pro/tag/sensible-ssh-with-ansible/) was delayed by a flood of yak shaves, but it's still (mostly) in active development.

@@ -13,7 +13,6 @@ tags:
   - patterns
   - composition
   - OOP
-draft: true
 ---
 
 This post serves as introduction to TypeScript decorators. It looks at basic decorators, decorator factories, and decorator composition. You should have some familiarity with TypeScript and some object-oriented programming experience.
