@@ -2,7 +2,7 @@
 title: "Chrome Remote Debugging on Windows"
 slug: "chrome-remote-debugging-on-windows"
 date: "2017-12-25T06:29:47.000Z"
-feature_image: "/images/2017/12/allow-connection-1.jpg"
+feature_image: "/images/2017/12/allow-connection.jpg"
 author: "CJ Harries"
 description: "I've had trouble with this before so I'm documenting the process. The official Google docs leave out a couple of setup steps, which is very frustrating."
 tags:
