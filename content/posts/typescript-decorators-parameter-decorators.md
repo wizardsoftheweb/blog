@@ -2,7 +2,7 @@
 title: "TypeScript Decorators: Parameter Decorators"
 slug: "typescript-decorators-parameter-decorators"
 date: "2018-03-10T23:00:00.000Z"
-feature_image: "/images/2018/03/header-7.png"
+feature_image: "/images/2018/03/header.png"
 author: "CJ Harries"
 description: "This post takes an in-depth look at parameter decorators. It examines their signature and provides a couple of useful examples."
 tags:

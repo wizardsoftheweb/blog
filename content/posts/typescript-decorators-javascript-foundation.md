@@ -2,7 +2,7 @@
 title: "TypeScript Decorators: JavaScript Foundation"
 slug: "typescript-decorators-javascript-foundation"
 date: "2018-03-06T01:00:00.000Z"
-feature_image: "/images/2018/03/header-5.png"
+feature_image: "/images/2018/03/header.png"
 author: "CJ Harries"
 description: "This post looks at how TypeScript compiles decorators, breaks down the raw JavaScript from the compiler, and analyzes the JavaScript output from several examples."
 tags:

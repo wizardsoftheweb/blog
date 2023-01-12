@@ -2,7 +2,7 @@
 title: "TypeScript Decorators: Property Decorators"
 slug: "typescript-decorators-property-decorators"
 date: "2018-03-11T01:00:00.000Z"
-feature_image: "/images/2018/03/header-8.png"
+feature_image: "/images/2018/03/header.png"
 author: "CJ Harries"
 description: "This post takes an in-depth look at property decorators. It examines their signature, provides sample usage, and exposes a common antipattern."
 tags:
