@@ -2,7 +2,7 @@
 title: "Let's Encrypt from Start to Finish: Automating Renewals"
 slug: "lets-encrypt-from-start-to-finish-automating-renewals"
 date: "2018-01-05T00:00:00.000Z"
-feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-7.png"
+feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache.png"
 author: "CJ Harries"
 description: "This post looks at several different ways to automate cert renewal, including cron and systemd options. You'll want to be able to send email from your server."
 tags:

@@ -2,7 +2,7 @@
 title: "Cursor Detection Run Time Analysis"
 slug: "cursor-detection-runtime-analysis"
 date: "2018-01-15T05:30:00.000Z"
-feature_image: "/images/2018/01/violin-xlib-color-1.png"
+feature_image: "/images/2018/01/violin-xlib-color.png"
 author: "CJ Harries"
 description: "This is a follow-up to post comparing cursor snooping methods. I don't have much to add, just more code and some (basic) graphs. Direct Xlib usage is the way to go.
 "

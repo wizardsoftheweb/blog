@@ -2,7 +2,7 @@
 title: "Sensible SSH with Ansible: Overview"
 slug: "sensible-ssh-with-ansible-overview"
 date: "2017-11-08T01:00:00.000Z"
-feature_image: "/images/2017/11/gear-6.png"
+feature_image: "/images/2017/11/gear.png"
 author: "CJ Harries"
 tags:
   - Sensible SSH with Ansible

@@ -2,7 +2,7 @@
 title: "Let's Encrypt from Start to Finish: Generating and Testing a Cert"
 slug: "lets-encrypt-from-start-to-finish-generating-and-testing-a-cert"
 date: "2018-01-04T00:00:00.000Z"
-feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-6.png"
+feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache.png"
 author: "CJ Harries"
 description: "This post wraps up the server config and puts it to use. It covers my approach to generating a cert, and provides some useful `openssl` commands for verification."
 tags:

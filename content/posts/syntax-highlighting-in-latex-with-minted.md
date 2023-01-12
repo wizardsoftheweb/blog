@@ -2,7 +2,7 @@
 title: "Syntax Highlighting in LaTeX with minted"
 slug: "syntax-highlighting-in-latex-with-minted"
 date: "2018-03-26T12:00:00.000Z"
-feature_image: "/images/2018/03/style-1.png"
+feature_image: "/images/2018/03/style.png"
 author: "CJ Harries"
 description: "This post serves as an introduction to minted, a pygments-based syntax highlighter for LaTeX. The post covers a few examples, the installation process, and  some basic security."
 tags:

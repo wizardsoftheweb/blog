@@ -2,7 +2,7 @@
 title: "Manage Many Keys with SSH Config and KeePass"
 slug: "ssh-config-with-keeagent"
 date: "2018-02-25T18:30:00.000Z"
-feature_image: "/images/2018/02/all-in-keeagent-1.png"
+feature_image: "/images/2018/02/all-in-keeagent.png"
 author: "CJ Harries"
 description: "Simply put, managing a ton of keys is a serious pain. If you've never really delved into the myriad ways to beef up your settings, this is a good place to start."
 tags:

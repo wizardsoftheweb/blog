@@ -2,7 +2,7 @@
 title: "Sensible SSH with Ansible: An Ansible Primer"
 slug: "sensible-ssh-with-ansible-ansible-primer"
 date: "2018-01-21T01:00:00.000Z"
-feature_image: "/images/2017/11/gear-7.png"
+feature_image: "/images/2017/11/gear.png"
 author: "CJ Harries"
 description: "This post serves as an Ansible primer. It looks at each component of an Ansible playbook with plenty of examples."
 tags:

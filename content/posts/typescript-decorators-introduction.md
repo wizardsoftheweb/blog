@@ -2,7 +2,7 @@
 title: "TypeScript Decorators: Introduction"
 slug: "typescript-decorators-introduction"
 date: "2018-03-04T19:00:00.000Z"
-feature_image: "/images/2018/03/header-4.png"
+feature_image: "/images/2018/03/header.png"
 author: "CJ Harries"
 description: "This is an introduction to TypeScript decorators. It looks at the basics, factories, and composition. You should have some familiarity with TypeScript and OOP."
 tags:

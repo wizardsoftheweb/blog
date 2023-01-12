@@ -2,7 +2,7 @@
 title: "Sensible SSH with Ansible: Vagrant Setup"
 slug: "sensible-ssh-with-ansible-vagrant-setup"
 date: "2017-11-14T01:00:00.000Z"
-feature_image: "/images/2017/11/gear-9.png"
+feature_image: "/images/2017/11/gear.png"
 author: "CJ Harries"
 tags:
   - Sensible SSH with Ansible
