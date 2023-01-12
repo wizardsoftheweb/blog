@@ -2,7 +2,7 @@
 title: "Let's Encrypt from Start to Finish: Tuning with OpenSSL"
 slug: "lets-encrypt-from-start-to-finish-openssl-tuning"
 date: "2018-01-01T18:00:00.000Z"
-feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-4.png"
+feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache.png"
 author: "CJ Harries"
 description: "This post sets up all the backend security logic (minus headers). I've tried to provide an explanation of each component and good values to use."
 tags:

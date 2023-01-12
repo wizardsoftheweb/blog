@@ -2,7 +2,7 @@
 title: "Let's Encrypt from Start to Finish: Useful Headers"
 slug: "lets-encrypt-from-start-to-finish-useful-headers"
 date: "2018-01-02T18:00:00.000Z"
-feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-5.png"
+feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache.png"
 author: "CJ Harries"
 description: "This post looks at common security headers. I've tried to explain what each one does, where it's helpful, and where it's not. I strongly recommend using HSTS."
 tags:

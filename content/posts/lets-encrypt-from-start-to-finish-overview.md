@@ -2,7 +2,7 @@
 title: "Let's Encrypt from Start to Finish: Overview"
 slug: "lets-encrypt-from-start-to-finish-overview"
 date: "2017-12-23T01:00:00.000Z"
-feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-1.png"
+feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache.png"
 author: "CJ Harries"
 tags:
   - Let's Encrypt from Start to Finish

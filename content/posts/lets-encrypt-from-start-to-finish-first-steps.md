@@ -2,7 +2,7 @@
 title: "Let's Encrypt From Start to Finish: First Steps"
 slug: "lets-encrypt-from-start-to-finish-first-steps"
 date: "2017-12-31T18:00:00.000Z"
-feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache-3.png"
+feature_image: "/images/2017/12/certbot-letsencrypt-nginx-apache.png"
 author: "CJ Harries"
 description: "This post is a catch-all for many things: good resources, certbot installation, and my approach to reusing Let's Encrypt config."
 tags:
